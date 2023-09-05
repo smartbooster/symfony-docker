@@ -1,0 +1,38 @@
+version: "3.4"
+
+services:
+  php:
+    image: ${APPLICATION:-}php
+    build:
+      context: .
+      args:
+        NODE_VERSION: ${NODE_VERSION:-18}
+        PHP_VERSION: ${PHP_VERSION:-8.2}
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/app
+      - ./var/log/php/:/app/var/log
+    extra_hosts:
+      # Ensure that host.docker.internal is correctly defined on Linux
+      - host.docker.internal:host-gateway
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: ${APPLICATION:-project_database}
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: dev
+    ports:
+      - "3306:3306"
+    hostname: mysql
+    volumes:
+      - ./var/data/mysql:/var/lib/mysql/:rw
+
+  maildev:
+    image: maildev/maildev:2.1.0
+    hostname: maildev
+    ports:
+      - "1080:80"
+    command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS

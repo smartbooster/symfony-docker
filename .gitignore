@@ -1,0 +1,21 @@
+###> project sources ###
+/composer.json
+/composer.lock
+/.env
+/symfony.lock
+/bin/
+/config/
+/public/
+/src/
+/dockerfile_extra.sh
+###< project sources ###
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
