@@ -16,6 +16,7 @@ ifeq (,$(wildcard composer.json)) # Si pas de composer.json alors on install Sym
 	make remove-symfony # MDT par sécurité on supprime les potentiels fichiers SF existant avant de refaire l'install
 	make install-symfony
 else
+	make init-rw-files
 	docker compose exec --user=dev php composer install
 	docker compose exec --user=dev php yarn install
 	docker compose exec --user=dev php make assets-dev

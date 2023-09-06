@@ -1,3 +1,12 @@
+# Fix des droits des dossiers var & public/files
+.PHONY: init-rw-files
+init-rw-files:
+	sudo mkdir -p ./var/cache
+	sudo chmod -R 777 ./var/cache
+	sudo chmod -R 777 ./var/log
+	mkdir -p public/files
+	sudo chmod -R 777 public/files
+
 .PHONY: install-symfony
 install-symfony:
 	# Ajout des variables d'env en vue de doctrine
@@ -17,11 +26,7 @@ install-symfony:
 	mv project/* ./
 	rm -rf project
 	# Fix des droits des dossiers var & public/files
-	sudo mkdir ./var/cache
-	sudo chmod -R 777 ./var/cache
-	sudo chmod -R 777 ./var/log
-	mkdir -p public/files
-	sudo chmod -R 777 public/files
+	make init-rw-files
 	# Fix du doctrine.yaml + suppression des bundles inutiles du SF webapp
 	sed '3,4c\        url: "%env(resolve:MYSQL_ADDON_URI)%"\n        server_version: "%env(resolve:MYSQL_ADDON_VERSION)%"' -i config/packages/doctrine.yaml
 	sed '5,8d' -i config/packages/doctrine.yaml
