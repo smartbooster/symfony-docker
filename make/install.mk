@@ -16,7 +16,7 @@ install-symfony:
 	rm -rf project/var project/.env.test project/.gitignore project/docker-compose.yml project/docker-compose.override.yml
 	mv project/* ./
 	rm -rf project
-	# Fix des droits des dosiers var & public/files
+	# Fix des droits des dossiers var & public/files
 	sudo mkdir ./var/cache
 	sudo chmod -R 777 ./var/cache
 	sudo chmod -R 777 ./var/log
@@ -30,4 +30,4 @@ install-symfony:
 
 .PHONY: remove-symfony
 remove-symfony:
-	sudo rm -rf bin config migrations node_modules public src templates tests translations vendor ./var/cache ./var/log/php/* composer.json composer.lock phpunit.xml.dist symfony.lock yarn.lock
+	sudo rm -rf bin config migrations node_modules public projet src templates tests translations vendor ./var/cache ./var/log/php/* composer.json composer.lock phpunit.xml.dist symfony.lock yarn.lock

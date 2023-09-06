@@ -1,6 +1,6 @@
 # Symfony Docker
 
-Installeur basé sur [Docker](https://www.docker.com/) pour faire tourner des projets [Symfony](https://symfony.com) + Node.
+Stack de développement basé sur [Docker](https://www.docker.com/) pour faire tourner les projets avec [Symfony](https://symfony.com) + [Node](https://nodejs.org/fr).
 
 ## Synchro de la stack docker dans repository projet vide
 
@@ -28,19 +28,20 @@ Ouvrez alors un autre terminal et lancer la commande suivante pour installer la 
 
 ```shell
 make install
+# Renseigner votre mot de passe utilisateur pour lancer les commandes sudo
+# Plus loin le prompt vous demandera "Do you want to include Docker configuration from recipes?", faites entrée pour continuer
 ```
 
-Rendez-vous sur http://localhost/ pour vérifier que l'install puis commiter.
+Rendez-vous sur http://localhost/ pour vérifier que l'install a fonctionné, si oui commiter l'ajout des fichiers.
 
 ## Environments variables
 
 Valeurs par défaut du .env :
 
 ```dotenv
-# Utiliser pour avoir un nom unique sur le build de l'image PHP ainsi que pour le nom de la database
-APPLICATION=php
-NODE_VERSION=18
-PHP_VERSION=8.2
+APPLICATION=to_replace # Utiliser pour avoir un nom unique sur le build de l'image PHP ainsi que pour le nom de la database
+NODE_VERSION=18 # valeur par défaut positionné dans le docker-compose si non renseigné dans le .env
+PHP_VERSION=8.2 # valeur par défaut positionné dans le docker-compose si non renseigné dans le .env
 ```
 
 Si vous changer les valeurs post make up alors arrêter tous avec make down puis faite un make build pour que docker rebuild les images avec les bonnes versions.

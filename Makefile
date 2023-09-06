@@ -12,12 +12,14 @@ include make/*.mk
 ## -------
 .PHONY: install
 install: ## Install the project
-ifeq (,$(wildcard composer.json))
+ifeq (,$(wildcard composer.json)) # Si pas de composer.json alors on install Symfony
+	make remove-symfony # MDT par sécurité on supprime les potentiels fichiers SF existant avant de refaire l'install
 	make install-symfony
 else
 	docker compose exec --user=dev php composer install
 	docker compose exec --user=dev php yarn install
 	docker compose exec --user=dev php make assets-dev
+	# Arrêt de l'install à cette étape si le doctrine-fixtures-bundle n'est pas installé ou si les group minimal/fake ne sont pas définis
 	docker compose exec --user=dev php make orm-install
 	docker compose exec --user=dev php make orm-load-fake
 endif
