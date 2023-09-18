@@ -1,6 +1,30 @@
 ##
 ## Docker commands
 ## ---------------
+ifndef APPLICATION
+$(error APPLICATION is not defined. Please set it before running this command.)
+endif
+
+.PHONY: docker-fetch df
+docker-fetch: ## Fetch smartbooster/symfony-docker stack files
+	sudo rm -rf var/data/
+	git remote add docker git@github.com:smartbooster/symfony-docker.git
+	git fetch docker
+	git checkout docker/main .
+	make docker-post-fetch
+df: docker-fetch
+
+.PHONY: docker-post-fetch
+docker-post-fetch: ## Post smartbooster/symfony-docker fetch process to clean unwanted files to be sync
+	rm .env.skeleton
+	git restore --staged package.json
+	git restore package.json
+	git restore --staged README.md
+	git restore README.md
+	git restore --staged yarn.lock
+	git restore yarn.lock
+	git remote remove docker
+
 .PHONY: up
 up: ## Start the project stack with docker
 	docker compose up

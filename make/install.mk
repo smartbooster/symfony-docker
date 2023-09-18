@@ -35,4 +35,4 @@ install-symfony:
 
 .PHONY: remove-symfony
 remove-symfony:
-	sudo rm -rf bin config migrations node_modules public projet src templates tests translations vendor ./var/cache ./var/log/php/* composer.json composer.lock phpunit.xml.dist symfony.lock
+	sudo rm -rf bin config migrations node_modules public project src templates tests translations vendor ./var/cache ./var/log/php/* composer.json composer.lock phpunit.xml.dist symfony.lock
