@@ -10,7 +10,7 @@ FROM php:${PHP_VERSION}-apache AS php_base
 EXPOSE 80
 WORKDIR /app
 
-# Install lib utilitaire
+# Install lib utility
 RUN apt-get update -qq && \
     apt-get install -qy \
     git \
@@ -59,7 +59,7 @@ RUN apt-get autoremove -y --purge \
     && apt-get clean \
     && rm -Rf /tmp/*
 
-# Ajout user dev
+# Add dev user
 RUN useradd --shell /bin/bash -u 1000 -o -c "" -m dev
 RUN export HOME=/home/dev
 RUN adduser dev sudo
