@@ -17,14 +17,18 @@ ifeq (,$(wildcard composer.json)) # If no composer.json then we install Symfony
 	make install-symfony
 else
 	make init-rw-files
-	docker compose exec --user=dev php composer install
-	docker compose exec --user=dev php yarn install
-	docker compose exec --user=dev php make assets-dev
-	# Stopping the install at this step if the doctrine-fixtures-bundle is not installed or if the minimal/fake groups are not defined
-	docker compose exec --user=dev php make orm-install
-	docker compose exec --user=dev php make orm-load-fake
-	echo Install complete!
+	docker compose exec --user=dev php make install-script
 endif
+
+.PHONY: install-script
+install-script: ## Install script using project packages config and setting up db (must be call on the php container, use it also on CI)
+	composer install
+	yarn install
+	make assets-dev
+	# Stopping the install at this step if the doctrine-fixtures-bundle is not installed or if the minimal/fake groups are not defined
+	make orm-install
+	make orm-load-fake
+	echo Install complete!
 
 .PHONY: update
 update: orm-update orm-status
