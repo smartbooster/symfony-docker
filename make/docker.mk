@@ -6,12 +6,12 @@ up: ## Start the project stack with docker
 	docker compose up
 
 .PHONY: build
-build: ## Rebuild the docker image
+build: ## Build the docker image with already downloaded image in docker cache
 	sudo rm -rf var/data
 	docker compose build --pull
 
 .PHONY: build-no-cache
-build-no-cache: ## Rebuild the docker image with already downloaded image in docker cache
+build-no-cache: ## Rebuild the docker image without docker cached images
 	sudo rm -rf var/data
 	docker compose build --pull --no-cache
 

@@ -1,4 +1,4 @@
-# On fait le include du .env pour que la variable d'env APPLICATION soit repris dans le docker compose
+# We include the .env so that the APPLICATION env variable is included in the docker compose
 include .env
 
 # Variables
@@ -12,17 +12,18 @@ include make/*.mk
 ## -------
 .PHONY: install
 install: ## Install the project
-ifeq (,$(wildcard composer.json)) # Si pas de composer.json alors on install Symfony
-	make remove-symfony # MDT par sécurité on supprime les potentiels fichiers SF existant avant de refaire l'install
+ifeq (,$(wildcard composer.json)) # If no composer.json then we install Symfony
+	make remove-symfony # MDT to be sure the install works, we delete the potential existing SF files before redoing the installation
 	make install-symfony
 else
 	make init-rw-files
 	docker compose exec --user=dev php composer install
 	docker compose exec --user=dev php yarn install
 	docker compose exec --user=dev php make assets-dev
-	# Arrêt de l'install à cette étape si le doctrine-fixtures-bundle n'est pas installé ou si les group minimal/fake ne sont pas définis
+	# Stopping the install at this step if the doctrine-fixtures-bundle is not installed or if the minimal/fake groups are not defined
 	docker compose exec --user=dev php make orm-install
 	docker compose exec --user=dev php make orm-load-fake
+	echo Install complete!
 endif
 
 .PHONY: update
