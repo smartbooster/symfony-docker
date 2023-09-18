@@ -13,6 +13,7 @@ df: docker-fetch
 
 .PHONY: docker-post-fetch
 docker-post-fetch: ## Post smartbooster/symfony-docker fetch process to clean unwanted files to be sync
+	git restore --staged .env.skeleton
 	rm -f .env.skeleton
 	git restore --staged package.json
 	git restore package.json
