@@ -16,7 +16,7 @@ df: docker-fetch
 
 .PHONY: docker-post-fetch
 docker-post-fetch: ## Post smartbooster/symfony-docker fetch process to clean unwanted files to be sync
-	rm .env.skeleton
+	rm -f .env.skeleton
 	git restore --staged package.json
 	git restore package.json
 	git restore --staged README.md
@@ -24,6 +24,7 @@ docker-post-fetch: ## Post smartbooster/symfony-docker fetch process to clean un
 	git restore --staged yarn.lock
 	git restore yarn.lock
 	git remote remove docker
+	echo Fetch smartbooster/symfony-docker complete!
 
 .PHONY: up
 up: ## Start the project stack with docker
