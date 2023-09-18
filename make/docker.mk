@@ -1,9 +1,6 @@
 ##
 ## Docker commands
 ## ---------------
-ifndef APPLICATION
-$(error APPLICATION is not defined. Please set it before running this command.)
-endif
 
 .PHONY: docker-fetch df
 docker-fetch: ## Fetch smartbooster/symfony-docker stack files
@@ -26,19 +23,29 @@ docker-post-fetch: ## Post smartbooster/symfony-docker fetch process to clean un
 	git remote remove docker
 	echo Fetch smartbooster/symfony-docker complete!
 
+.PHONY: check-missing-env
+check-missing-env: ## Prevent sub make call if missing env variable
+	if [ -z "$$(cat .env | grep '^APPLICATION=')" ]; then \
+		echo "Error: APPLICATION is not defined in .env"; \
+		exit 1; \
+	fi
+
 .PHONY: up
 up: ## Start the project stack with docker
-	docker compose up
+	make check-missing-env
+	env $(cat .env | grep -v '^#') docker compose up
 
 .PHONY: build
 build: ## Build the docker image with already downloaded image in docker cache
+	make check-missing-env
 	sudo rm -rf var/data
-	docker compose build --pull
+	env $(cat .env | grep -v '^#') docker compose build --pull
 
 .PHONY: build-no-cache
 build-no-cache: ## Rebuild the docker image without docker cached images
+	make check-missing-env
 	sudo rm -rf var/data
-	docker compose build --pull --no-cache
+	env $(cat .env | grep -v '^#') docker compose build --pull --no-cache
 
 .PHONY: down
 down: ## Kill the project stack with docker

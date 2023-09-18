@@ -1,6 +1,3 @@
-# We include the .env so that the APPLICATION env variable is included in the docker compose
-include .env
-
 # Variables
 ENV?=dev
 CONSOLE=php bin/console
