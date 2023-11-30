@@ -13,9 +13,12 @@ services:
     volumes:
       - ./:/app
       - ./var/log/php/:/app/var/log
+      - ./docker/xdebug_profile/:/tmp/docker_xdebug/
     extra_hosts:
       # Ensure that host.docker.internal is correctly defined on Linux
       - host.docker.internal:host-gateway
+    environment:
+      XDEBUG_MODE: ${XDEBUG_MODE:-off}
 
   mysql:
     image: mysql:8.0
@@ -36,3 +39,8 @@ services:
     ports:
       - "1080:80"
     command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
+
+  blackfire:
+    image: blackfire/blackfire:2
+    ports: [ "8307" ]
+    env_file: .env.blackfire
