@@ -87,6 +87,17 @@ If you happen to changes docker/make files from your project, and feel like it m
 - Give it a proper branch name, push it and make a GitHub Pull Request, and ping @mathieu-ducrot for review
 - Once the PR is accepted and merged, other project can now do a `make df` to benefit the latest changes
 
+## How to use Blackfire
+
+Create a .env.blackfire file and fill in with your credentials :
+
+```dotenv
+BLACKFIRE_SERVER_ID=your_server_id
+BLACKFIRE_SERVER_TOKEN=your_server_token
+```
+
+Restart the docker stack if it was already running without the env var, enjoy profiling !
+
 ## Contributing
 
 Pull requests are welcome.
