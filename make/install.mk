@@ -29,11 +29,12 @@ install-symfony:
 	mv project/* ./
 	rm -rf project
 	make init-rw-files
-	# Fix doctrine.yaml + removal of unnecessary bundles from SF webapp
+	# Fix doctrine.yaml + removal of unnecessary bundles/files from SF webapp
 	sed '3,4c\        url: "%env(resolve:MYSQL_ADDON_URI)%"\n        server_version: "%env(resolve:MYSQL_ADDON_VERSION)%"' -i config/packages/doctrine.yaml
 	sed '5,8d' -i config/packages/doctrine.yaml
 	rm config/packages/messenger.yaml
 	docker compose exec --user=dev php composer remove symfony/doctrine-messenger
+	rm phpunit.xml.dist
 	echo Install complete!
 
 .PHONY: remove-symfony
