@@ -36,13 +36,21 @@ COPY --from=composer_upstream --link /composer /usr/bin/composer
 RUN docker-php-ext-configure zip && \
     docker-php-ext-install -j$(nproc) intl opcache pdo_mysql zip sodium gd
 
-# Install PHP Xdebug configuration, (see https://blog.eleven-labs.com/fr/debugger-avec-xdebug/)
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug
+# Install PHP Xdebug
+RUN pecl install xdebug
 
 # https://symfony.com/download
 RUN  curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' |  bash
 RUN  apt install symfony-cli
+
+# https://docs.blackfire.io/php/integrations/php-docker
+RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
+    && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/linux/amd64/$version \
+    && mkdir -p /tmp/blackfire \
+    && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp/blackfire \
+    && mv /tmp/blackfire/blackfire-*.so $(php -r "echo ini_get ('extension_dir');")/blackfire.so \
+    && printf "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8307\n" > $PHP_INI_DIR/conf.d/blackfire.ini \
+    && rm -rf /tmp/blackfire /tmp/blackfire-probe.tar.gz
 
 # Install Node et Yarn https://stackoverflow.com/questions/44447821/how-to-create-a-docker-image-for-php-and-node
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
@@ -67,6 +75,7 @@ RUN adduser dev sudo
 # PHP config
 COPY --link docker/.bashrc /home/dev/.bashrc
 COPY --link docker/php/conf.d/app.ini $PHP_INI_DIR/conf.d/
+COPY --link docker/php/conf.d/xdebug.ini $PHP_INI_DIR/conf.d/
 
 # Apache config
 COPY --link docker/apache/vhost.conf /etc/apache2/sites-available/000-default.conf

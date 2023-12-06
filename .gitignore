@@ -2,6 +2,7 @@
 /public/revision.txt
 /public/uploads/
 /public/files/
+/docker/xdebug_profile/
 
 ###> symfony/framework-bundle ###
 /.env.local

@@ -6,6 +6,7 @@ init-rw-files:
 	sudo chmod -R 777 ./var/log
 	mkdir -p public/files
 	sudo chmod -R 777 public/files
+	sudo chmod -R 777 docker/xdebug_profile
 
 .PHONY: install-symfony
 install-symfony:
