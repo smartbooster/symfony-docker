@@ -29,7 +29,7 @@ Then open another terminal and run the following command to install the latest s
 ```shell
 make install
 # Enter your user password to run sudo commands
-# Further on, the prompt will ask you "Do you want to include Docker configuration from recipes?", press enter to continue
+# Further on, the prompt will ask you "Do you want to include Docker configuration from recipes?", press n and enter to skip recipe configuration.
 ```
 
 When you see "Install complete!" on the prompt, go to http://localhost/ to check that the installation worked, if so, commit adding files.
