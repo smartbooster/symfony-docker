@@ -53,7 +53,6 @@ If you have any hidden files in .docker directory, you can delete them as they w
 Be sure that the docker stack of the project is stop before doing the following command :
 
 ```shell
-sudo rm -rf var/data/
 git remote add docker git@github.com:smartbooster/symfony-docker.git
 git fetch docker
 git checkout docker/main .
