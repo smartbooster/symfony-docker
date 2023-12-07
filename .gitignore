@@ -19,10 +19,6 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
-###> squizlabs/php_codesniffer ###
-/.phpcs-cache
-###< squizlabs/php_codesniffer ###
-
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/build/
