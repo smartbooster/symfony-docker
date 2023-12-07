@@ -52,6 +52,19 @@ RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
     && printf "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8307\n" > $PHP_INI_DIR/conf.d/blackfire.ini \
     && rm -rf /tmp/blackfire /tmp/blackfire-probe.tar.gz
 
+# Install Imagick
+RUN apt-get update && apt-get install -y libmagickwand-dev --no-install-recommends \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick
+
+# Install wkhtmltopdf with qt patched version
+RUN apt-get update && apt-get install -y xfonts-75dpi xfonts-base fontconfig libxrender1
+RUN curl -sSLO https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.bookworm_amd64.deb \
+    && dpkg -i wkhtmltox_0.12.6.1-3.bookworm_amd64.deb \
+    && apt-get -f install \
+    && wkhtmltopdf -V \
+    && rm -f wkhtmltox_0.12.6.1-3.bookworm_amd64.deb
+
 # Install Node et Yarn https://stackoverflow.com/questions/44447821/how-to-create-a-docker-image-for-php-and-node
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
@@ -62,10 +75,16 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 RUN sudo apt-get update && apt-get install --no-install-recommends -y yarn
 
+## Fix node error : digital envelope routines::unsupported ERR_OSSL_EVP_UNSUPPORTED when using yarn run
+## This error is trigger by legacy package.json webpack@^4 while compiling asset on node version 17+
+## https://www.reddit.com/r/webdev/comments/qd14bm/node_17_currently_breaks_most_webpack/
+## https://github.com/webpack/webpack/issues/14532#issuecomment-947012063
+ENV NODE_OPTIONS=--openssl-legacy-provider
+
 # Cleaning
 RUN apt-get autoremove -y --purge \
     && apt-get clean \
-    && rm -Rf /tmp/*
+    && rm -Rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Add dev user
 RUN useradd --shell /bin/bash -u 1000 -o -c "" -m dev
@@ -80,11 +99,6 @@ COPY --link docker/php/conf.d/xdebug.ini $PHP_INI_DIR/conf.d/
 # Apache config
 COPY --link docker/apache/vhost.conf /etc/apache2/sites-available/000-default.conf
 COPY --link docker/apache/apache.conf /etc/apache2/conf-available/z-app.conf
-
-# WIP Extra Dockerfile instruction
-#RUN if [ -x ./dockerfile_extra.sh ]; then \
-#      dockerfile_extra.sh; \
-#    fi
 
 RUN a2enmod rewrite remoteip && \
     a2enconf z-app \
