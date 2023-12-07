@@ -4,7 +4,6 @@
 
 .PHONY: docker-fetch df
 docker-fetch: ## Fetch smartbooster/symfony-docker stack files
-	sudo rm -rf var/data/
 	git remote add docker git@github.com:smartbooster/symfony-docker.git
 	git fetch docker
 	git checkout docker/main .
@@ -39,14 +38,12 @@ up: ## Start the project stack with docker
 .PHONY: build
 build: ## Build the docker image with already downloaded image in docker cache
 	make check-missing-env
-	sudo rm -rf var/data
-	env $(cat .env | grep -v '^#') docker compose build --pull
+	env $(cat .env | grep -v '^#') docker compose build php --pull
 
 .PHONY: build-no-cache
 build-no-cache: ## Rebuild the docker image without docker cached images
 	make check-missing-env
-	sudo rm -rf var/data
-	env $(cat .env | grep -v '^#') docker compose build --pull --no-cache
+	env $(cat .env | grep -v '^#') docker compose build php --pull --no-cache
 
 .PHONY: down
 down: ## Kill the project stack with docker
