@@ -9,8 +9,7 @@ COLOR_COMMAND = \033[01m\033[34m
 
 define HELP_MESSAGE=
 $(COLOR_INFO)To launch and install the project use the command$(COLOR_RESET) '"\033[01m$(COLOR_COMMAND)make up$(COLOR_RESET)"',\
-then in another terminal type $(COLOR_RESET)'"\033[01m$(COLOR_COMMAND)make ssh$(COLOR_RESET)"'\
-followed by$(COLOR_RESET) '"$(COLOR_COMMAND)make install$(COLOR_RESET)"'
+then in another terminal type$(COLOR_RESET) '"$(COLOR_COMMAND)make install$(COLOR_RESET)"'
 endef
 
 .PHONY: help
