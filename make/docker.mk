@@ -8,7 +8,7 @@ docker-fetch: ## Fetch smartbooster/symfony-docker stack files
 	git fetch docker
 	git checkout docker/main .
 	make docker-post-fetch
-df: docker-fetch
+df: docker-fetch ## Alias for docker-fetch
 
 .PHONY: docker-post-fetch
 docker-post-fetch: ## Post smartbooster/symfony-docker fetch process to clean unwanted files to be sync
