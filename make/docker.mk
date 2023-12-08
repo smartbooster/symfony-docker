@@ -20,6 +20,10 @@ docker-post-fetch: ## Post smartbooster/symfony-docker fetch process to clean un
 	git restore README.md
 	git restore --staged yarn.lock
 	git restore yarn.lock
+	git restore --staged .gitignore
+	git restore .gitignore
+	git restore --staged .env.blackfire
+	git restore .env.blackfire
 	git remote remove docker
 	echo Fetch smartbooster/symfony-docker complete!
 
