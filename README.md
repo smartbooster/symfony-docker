@@ -145,14 +145,37 @@ If you change the version values post `make up` then stop everything with a `mak
 
 ### How to use Blackfire
 
-Create a .env.blackfire file and fill in with your credentials :
+> Due to [blackfire conflicting with the xdebug extension](https://support.blackfire.platform.sh/hc/en-us/articles/4842942116754-PHP-crashes-with-a-segmentation-fault#check-for-conflicting-extensions), 
+> we decided to extract the blackfire.ini from our Dockerfile steps and make it an on demand feature available through a dedicated docker-compose volume line
+
+1. First Uncomment the following line in the docker-compose.yml file :
+
+```yml
+php:
+  # ...
+  volumes:
+    - ./:/app
+    - ./var/log/php/:/app/var/log
+    - ./docker/xdebug_profile/:/tmp/docker_xdebug/
+    - ./docker/php/conf.d/blackfire.ini:/usr/local/etc/php/conf.d/blackfire.ini # <= this one
+```
+
+> Be sure to have the XDEBUG_MODE env var unset or set with the 'off' value to minimize the impact of xdebug extension on profiling performance. 
+
+2. Next fill in the .env.blackfire file with your credentials :
 
 ```dotenv
 BLACKFIRE_SERVER_ID=your_server_id
 BLACKFIRE_SERVER_TOKEN=your_server_token
 ```
 
-Restart the docker stack if it was already running without the env var, enjoy profiling !
+3. Restart the docker stack, you can now enjoy profiling with Blackfire !
+
+> As mentioned before, be aware that while the blackfire extension is enabled you won't be able to perform the Makefile
+> `coverage` test commands (you will be prompted with a Segmentation fault error if you try).  
+> So don't forget to comment the blackfire.ini volume line again after you are done profiling with Blackfire.
+
+**Also, the uncommented line and your blackfire credentials changes mustn't be committed to this repository**
 
 ## Contributing
 
