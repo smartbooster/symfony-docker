@@ -8,7 +8,7 @@ docker-fetch: ## Fetch smartbooster/symfony-docker stack files
 	git fetch docker
 	git checkout docker/main .
 	make docker-post-fetch
-df: docker-fetch
+df: docker-fetch ## Alias for docker-fetch
 
 .PHONY: docker-post-fetch
 docker-post-fetch: ## Post smartbooster/symfony-docker fetch process to clean unwanted files to be sync
@@ -20,6 +20,10 @@ docker-post-fetch: ## Post smartbooster/symfony-docker fetch process to clean un
 	git restore README.md
 	git restore --staged yarn.lock
 	git restore yarn.lock
+	git restore --staged .gitignore
+	git restore .gitignore
+	git restore --staged .env.blackfire
+	git restore .env.blackfire
 	git remote remove docker
 	echo Fetch smartbooster/symfony-docker complete!
 

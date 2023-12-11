@@ -49,7 +49,6 @@ RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
     && mkdir -p /tmp/blackfire \
     && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp/blackfire \
     && mv /tmp/blackfire/blackfire-*.so $(php -r "echo ini_get ('extension_dir');")/blackfire.so \
-    && printf "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8307\n" > $PHP_INI_DIR/conf.d/blackfire.ini \
     && rm -rf /tmp/blackfire /tmp/blackfire-probe.tar.gz
 
 # Install Imagick
@@ -74,12 +73,6 @@ RUN node -v
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 RUN sudo apt-get update && apt-get install --no-install-recommends -y yarn
-
-## Fix node error : digital envelope routines::unsupported ERR_OSSL_EVP_UNSUPPORTED when using yarn run
-## This error is trigger by legacy package.json webpack@^4 while compiling asset on node version 17+
-## https://www.reddit.com/r/webdev/comments/qd14bm/node_17_currently_breaks_most_webpack/
-## https://github.com/webpack/webpack/issues/14532#issuecomment-947012063
-ENV NODE_OPTIONS=--openssl-legacy-provider
 
 # Cleaning
 RUN apt-get autoremove -y --purge \

@@ -14,11 +14,14 @@ services:
       - ./:/app
       - ./var/log/php/:/app/var/log
       - ./docker/xdebug_profile/:/tmp/docker_xdebug/
+      # Uncomment the following line to enable the blackfire extension, remember that you won't be able to make coverage while blackfire is enabled
+      # - ./docker/php/conf.d/blackfire.ini:/usr/local/etc/php/conf.d/blackfire.ini
     extra_hosts:
       # Ensure that host.docker.internal is correctly defined on Linux
       - host.docker.internal:host-gateway
     environment:
       XDEBUG_MODE: ${XDEBUG_MODE:-off}
+      NODE_OPTIONS: ${NODE_OPTIONS:-}
 
   mysql:
     image: mysql:8.0
