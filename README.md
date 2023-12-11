@@ -143,6 +143,42 @@ PHP_VERSION=8.2 # default value positioned in docker-compose if not specified in
 
 If you change the version values post `make up` then stop everything with a `make down` then do a `make build` so that docker rebuilds the images with the correct versions.
 
+### Fix the Node Error digital envelope routines::unsupported ERR_OSSL_EVP_UNSUPPORTED
+
+If you are compiling your asset with a recent Node version (17+) and still having an old webpack@^4 you could have the 
+following error when doing a `yarn run dev` or `yarn run build` :
+
+```bash
+node:internal/crypto/hash:69
+  this[kHandle] = new _Hash(algorithm, xofLen);
+                  ^
+
+Error: error:0308010C:digital envelope routines::unsupported
+    at new Hash (node:internal/crypto/hash:69:19)
+    at Object.createHash (node:crypto:133:10)
+    at module.exports (/app/node_modules/webpack/lib/util/createHash.js:135:53)
+    at NormalModule._initBuildHash (/app/node_modules/webpack/lib/NormalModule.js:417:16)
+    at /app/node_modules/webpack/lib/NormalModule.js:452:10
+    at /app/node_modules/webpack/lib/NormalModule.js:323:13
+    at /app/node_modules/loader-runner/lib/LoaderRunner.js:367:11
+    at /app/node_modules/loader-runner/lib/LoaderRunner.js:233:18
+    at context.callback (/app/node_modules/loader-runner/lib/LoaderRunner.js:111:13)
+    at /app/node_modules/babel-loader/lib/index.js:59:103 {
+  opensslErrorStack: [ 'error:03000086:digital envelope routines::initialization error' ],
+  library: 'digital envelope routines',
+  reason: 'unsupported',
+  code: 'ERR_OSSL_EVP_UNSUPPORTED'
+}
+```
+
+If that the case, do the following steps to fix this error :
+
+- Add this environment variable into your .env file : `NODE_OPTIONS=--openssl-legacy-provider`
+- Add it to the .gitlab-ci.yml `variables` of the `test` job : `NODE_OPTIONS: '--openssl-legacy-provider'`
+- And finally, add it to all Clever Cloud applications where the project is deployed on : `NODE_OPTIONS="--openssl-legacy-provider"`
+
+_Ref link of the issue : https://github.com/webpack/webpack/issues/14532#issuecomment-947012063_
+
 ### How to use Blackfire
 
 > Due to [blackfire conflicting with the xdebug extension](https://support.blackfire.platform.sh/hc/en-us/articles/4842942116754-PHP-crashes-with-a-segmentation-fault#check-for-conflicting-extensions), 

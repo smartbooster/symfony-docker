@@ -21,6 +21,7 @@ services:
       - host.docker.internal:host-gateway
     environment:
       XDEBUG_MODE: ${XDEBUG_MODE:-off}
+      NODE_OPTIONS: ${NODE_OPTIONS:-}
 
   mysql:
     image: mysql:8.0
