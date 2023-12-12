@@ -49,3 +49,19 @@ make orm-update
 ```
 
 You are now good to debug the downloaded server database on your local machine!
+
+## Link the project to Clever Cloud application
+
+1. Use the following command to link the project to a dedicated Clever Cloud application
+
+```shell
+# Get the app id from the Clever Cloud console on the application overview and replace the app_XXX placeholder by his value
+clever link app_XXX
+```
+
+This will add the application deploy config to the `.clever.json` file.  
+This file needs to be committed to the project repository to be parsed by the CD GitLab jobs.
+
+2. Then refer to the .gitlab-ci .yml file and add the dedicated application `deploy-{environment}` and `restart-{environment}` jobs with their correct `url`.
+
+You can now deploy your project through the GitLab CD jobs.
