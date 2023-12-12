@@ -22,6 +22,7 @@ docker-post-fetch: ## Post smartbooster/symfony-docker fetch process to clean un
 	git restore yarn.lock
 	git restore --staged .gitignore
 	git restore .gitignore
+	touch .env.blackfire ## the file must be touched for project that doesn't have it else the restore git command wont work
 	git restore --staged .env.blackfire
 	git restore .env.blackfire
 	git restore --staged .gitlab-ci.yml
