@@ -15,10 +15,8 @@ build-image:
   image: docker
   services:
     - docker:dind # docker in docker
-  variables:
-    # Still need to be dynamically passed cf. https://github.com/smartbooster/symfony-docker/issues/8
-    PHP_VERSION: '8.2'
-    NODE_VERSION: '18'
+  before_script:
+    - '[ -f .env ] && export $(grep -v "^#" .env | xargs) || echo ".env file not found"'
   script:
     - echo $PHP_VERSION
     - echo $NODE_VERSION
