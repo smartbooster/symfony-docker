@@ -1,0 +1,124 @@
+cache:
+  key: "${CI_PROJECT_ID}_build_cache"
+  paths:
+    - vendor/
+    - node_modules/
+
+stages:
+  - build-test
+  - recette
+  #- production
+
+# Build & Use Custom Docker images in your GitLab CI/CD pipeline https://www.youtube.com/watch?v=7I6tHw68DMQ
+build-image:
+  stage: build-test
+  image: docker
+  services:
+    - docker:dind # docker in docker
+  variables:
+    # Still need to be dynamically passed cf. https://github.com/smartbooster/symfony-docker/issues/8
+    PHP_VERSION: '8.2'
+    NODE_VERSION: '18'
+  script:
+    - echo $PHP_VERSION
+    - echo $NODE_VERSION
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+    - docker build --build-arg PHP_VERSION=$PHP_VERSION --build-arg NODE_VERSION=$NODE_VERSION -t $CI_REGISTRY_IMAGE .
+    - docker push $CI_REGISTRY_IMAGE
+  when: manual
+
+test:
+  stage: build-test
+  image: $CI_REGISTRY_IMAGE
+  tags:
+    - docker
+  except:
+    - master
+  services:
+    - mysql:8.0
+  variables:
+    MYSQL_DATABASE: ci-db
+    MYSQL_ROOT_PASSWORD: root
+    MYSQL_USER: dev
+    MYSQL_PASSWORD: dev
+    MYSQL_ADDON_URI: mysql://dev:dev@mysql:3306/ci-db
+    MYSQL_ADDON_VERSION: '8.0'
+    XDEBUG_MODE: 'off'
+  coverage: /^\s*Lines:\s*\d+.\d+\%/
+  artifacts:
+    expire_in: 60min
+    when: on_success
+    paths:
+      - build/
+    reports:
+      junit: build/phpunit-report.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: build/phpunit-cobertura.xml
+  script:
+    - make install-script
+    - make orm-status
+    - make coverage
+    - make qualimetry
+
+deploy-recette:
+  stage: recette
+  environment:
+    name: recette
+    url: https://client-project-$CI_ENVIRONMENT_SLUG.smartbooster.io
+  image:
+    name: clevercloud/clever-tools:latest
+    entrypoint: [ "/bin/sh", "-c" ]
+  tags:
+    - docker
+  dependencies: []
+  when: manual
+  script:
+    - clever deploy -f -a client-project-$CI_ENVIRONMENT_SLUG
+  cache: {}
+
+restart-recette:
+  stage: recette
+  environment:
+    name: recette
+  image:
+    name: clevercloud/clever-tools:latest
+    entrypoint: [ "/bin/sh", "-c" ]
+  tags:
+    - docker
+  dependencies: []
+  when: manual
+  script:
+    - clever restart --commit $CI_COMMIT_SHA -a client-project-$CI_ENVIRONMENT_SLUG
+  cache: {}
+
+#deploy-production:
+#  stage: production
+#  environment:
+#    name: production
+#    url: https://client-project-$CI_ENVIRONMENT_SLUG.smartbooster.io
+#  image:
+#    name: clevercloud/clever-tools:latest
+#    entrypoint: [ "/bin/sh", "-c" ]
+#  tags:
+#    - docker
+#  dependencies: []
+#  when: manual
+#  script:
+#    - clever deploy -f -a client-project-$CI_ENVIRONMENT_SLUG
+#  cache: {}
+#
+#restart-production:
+#  stage: production
+#  environment:
+#    name: production
+#  image:
+#    name: clevercloud/clever-tools:latest
+#    entrypoint: [ "/bin/sh", "-c" ]
+#  tags:
+#    - docker
+#  dependencies: []
+#  when: manual
+#  script:
+#    - clever restart --commit $CI_COMMIT_SHA -a client-project-$CI_ENVIRONMENT_SLUG
+#  cache: {}
