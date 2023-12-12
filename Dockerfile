@@ -83,6 +83,8 @@ RUN apt-get autoremove -y --purge \
 RUN useradd --shell /bin/bash -u 1000 -o -c "" -m dev
 RUN export HOME=/home/dev
 RUN adduser dev sudo
+COPY --link docker/.gitconfig /home/dev/.gitconfig
+COPY --link docker/.gitignore_global /home/dev/.gitignore_global
 
 # PHP config
 COPY --link docker/.bashrc /home/dev/.bashrc
