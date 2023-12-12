@@ -63,6 +63,7 @@ Be sure that the docker stack of the project is stop before doing the following 
 git remote add docker git@github.com:smartbooster/symfony-docker.git
 git fetch docker
 git checkout docker/main .
+git remote remove docker
 make docker-post-fetch
 ```
 

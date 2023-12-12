@@ -7,6 +7,7 @@ docker-fetch: ## Fetch smartbooster/symfony-docker stack files
 	git remote add docker git@github.com:smartbooster/symfony-docker.git
 	git fetch docker
 	git checkout docker/main .
+	git remote remove docker
 	make docker-post-fetch
 df: docker-fetch ## Alias for docker-fetch
 
@@ -26,7 +27,6 @@ docker-post-fetch: ## Post smartbooster/symfony-docker fetch process to clean un
 	git restore .gitlab-ci.yml
 	git restore --staged docs
 	rm -r docs
-	git remote remove docker
 	echo Fetch smartbooster/symfony-docker complete!
 
 .PHONY: check-missing-env
