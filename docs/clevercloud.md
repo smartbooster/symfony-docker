@@ -3,6 +3,19 @@
 We use **Clever Cloud** has our main PaaS of choice to deploy our project.
 Here is a compilation of doc about to interact between the infra stack of the project and Clever Cloud.
 
+## Install the Clever Cloud CLI
+
+We use the **Clever Cloud CLI** for linking project repository to Clever Cloud application and for ssh into them.  
+The easiest method to install it is via npm by typing :
+
+```shell
+npm install -g clever-tools
+```
+
+You can use the same install command to update your current version of the CLI.
+
+_More information about the [Clever Cloud CLI here](https://developers.clever-cloud.com/doc/cli/)_
+
 ## Import a backup from a Clever Cloud add-on down to a local project
 
 Sometimes, we must import distant server SQL database to check unexpected behavior with our local debugging tools.    
@@ -51,6 +64,8 @@ make orm-update
 You are now good to debug the downloaded server database on your local machine!
 
 ## Link the project to Clever Cloud application
+
+> Be sure to [have the Clever Cloud CLI install](https://github.com/smartbooster/symfony-docker/blob/main/docs/clevercloud.md##install-the-clever-cloud-cli) first.
 
 1. Use the following command to link the project to a dedicated Clever Cloud application
 
