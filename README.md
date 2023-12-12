@@ -213,6 +213,10 @@ BLACKFIRE_SERVER_TOKEN=your_server_token
 
 **Also, the uncommented line and your blackfire credentials changes mustn't be committed to this repository**
 
+### Clever Cloud
+
+Checkout all [Clever Cloud related documentation here](docs/clevercloud.md).
+
 ## Contributing
 
 Pull requests are welcome.

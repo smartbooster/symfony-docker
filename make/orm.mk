@@ -2,13 +2,17 @@
 ## Database management
 ## -------------------
 .PHONY: orm-install
-orm-install:: ## Create the databse + Loading minimales fixtures. For production environnement add ENV=PROD
+orm-install:: ## Create the databse with schema + Load minimal fixtures. For production environment add ENV=PROD
 	$(CONSOLE) doctrine:database:drop --if-exists --force --env=$(ENV)
 	$(CONSOLE) doctrine:database:create --env=$(ENV)
 	$(CONSOLE) doctrine:schema:update --force --env=$(ENV)
 	$(CONSOLE) doctrine:migrations:sync-metadata-storage --env=$(ENV)
 	$(CONSOLE) doctrine:migrations:version --add --all --no-interaction --env=$(ENV)
 	make orm-load-minimal
+
+orm-db-recreate:: ## Recreate the database as empty (no schema nor fixtures). Use it before database import
+	$(CONSOLE) doctrine:database:drop --if-exists --force --env=$(ENV)
+	$(CONSOLE) doctrine:database:create --env=$(ENV)
 
 .PHONY: orm-sync-force
 orm-sync-force:: ## Force the database schema to be sync with the mapping files
@@ -25,12 +29,12 @@ orm-prev:: ## Revert database to last migration
 	$(CONSOLE) doctrine:migrations:migrate prev --env=$(ENV)
 
 .PHONY: orm-status
-orm-status:: ## Show ORM status (Migrations, Mapping, Synch). For production environnement add ENV=PROD
+orm-status:: ## Show ORM status (Migrations, Mapping, Synch). For production environment add ENV=PROD
 	$(CONSOLE) doctrine:migrations:status --no-interaction --env=$(ENV)
 	$(CONSOLE) doctrine:schema:validate --env=$(ENV)
 
 .PHONY: orm-show-diff
-orm-show-diff:: ## Dump the SQL needed to update the database schema to match the current mapping metadata.  For production environnement add ENV=PROD
+orm-show-diff:: ## Dump the SQL needed to update the database schema to match the current mapping metadata.  For production environment add ENV=PROD
 	$(CONSOLE) doctrine:schema:update --dump-sql --env=$(ENV)
 
 .PHONY: orm-diff
