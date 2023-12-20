@@ -10,6 +10,8 @@ FROM php:${PHP_VERSION}-apache AS php_base
 EXPOSE 80
 WORKDIR /app
 
+ARG CURRENT_UID=1000
+
 # Install lib utility
 RUN apt-get update -qq && \
     apt-get install -qy \
@@ -80,7 +82,7 @@ RUN apt-get autoremove -y --purge \
     && rm -Rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Add dev user
-RUN useradd --shell /bin/bash -u 1000 -o -c "" -m dev
+RUN useradd --shell /bin/bash -u $CURRENT_UID -o -c "" -m dev
 RUN export HOME=/home/dev
 RUN adduser dev sudo
 COPY --link docker/.gitconfig /home/dev/.gitconfig
