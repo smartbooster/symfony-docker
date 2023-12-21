@@ -1,6 +1,7 @@
 ##
 ## Docker commands
 ## ---------------
+DEV_UID := $(shell id -u)
 
 .PHONY: docker-fetch df
 docker-fetch: ## Fetch smartbooster/symfony-docker stack files
@@ -44,12 +45,12 @@ up: ## Start the project stack with docker
 .PHONY: build
 build: ## Build the docker image with already downloaded image in docker cache
 	make check-missing-env
-	env $(cat .env | grep -v '^#') docker compose build php --pull
+	env $(cat .env | grep -v '^#') docker compose build php --pull --build-arg DEV_UID=$(DEV_UID)
 
 .PHONY: build-no-cache
 build-no-cache: ## Rebuild the docker image without docker cached images
 	make check-missing-env
-	env $(cat .env | grep -v '^#') docker compose build php --pull --no-cache
+	env $(cat .env | grep -v '^#') docker compose build php --pull --no-cache --build-arg DEV_UID=$(DEV_UID)
 
 .PHONY: down
 down: ## Kill the project stack with docker

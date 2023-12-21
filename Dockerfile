@@ -80,7 +80,8 @@ RUN apt-get autoremove -y --purge \
     && rm -Rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Add dev user
-RUN useradd --shell /bin/bash -u 1000 -o -c "" -m dev
+ARG DEV_UID=1000
+RUN useradd --shell /bin/bash -u $DEV_UID -o -c "" -m dev
 RUN export HOME=/home/dev
 RUN adduser dev sudo
 COPY --link docker/.gitconfig /home/dev/.gitconfig
