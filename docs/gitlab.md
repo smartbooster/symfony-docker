@@ -1,9 +1,10 @@
-# Add gitlab ssh key
+# Gitlab
+## Add gitlab ssh key
 
 We use **ssh** protocol for project clone on gitlab.   
 This is documentation for add ssh key on gitlab account. You can found gitlab doc [here](https://docs.gitlab.com/ee/user/ssh.html).
 
-## Generate an SSH key pair
+### Generate an SSH key pair
 
 ```bash
 ssh-keygen -t ed25519 -C "<email>"
@@ -29,7 +30,7 @@ Enter same passphrase again:
 
 A public and private key are generated. Next, add the public SSH key to your GitLab account.
 
-## Add an SSH key to your GitLab account
+### Add an SSH key to your GitLab account
 
 1. Copy your public key to your GitLab account
 
@@ -49,7 +50,7 @@ Now, public key is on your clipboard.
 - Remove Expiration date
 - Select `Add key`
 
-## Verify that you can connect
+### Verify that you can connect
 
 Open a terminal and run this command, replacing `gitlab.example.com` with your GitLab instance URL:
 

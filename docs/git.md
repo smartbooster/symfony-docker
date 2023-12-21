@@ -54,3 +54,23 @@ You can do so by typing :
 echo ".idea" >> ~/.gitignore_global
 git config --global core.excludesfile ~/.gitignore_global
 ```
+
+## How to get the .git history of an installed vendor
+
+If you wish to work on a bundle inside a project, we advise getting his git sources directly inside the project, rather than cloning it and open in a standalone context.
+That way you can directly test your changes in a real project situation, commit and push these changes to the bundle repository remote.
+
+Firstly you must require the bundle you want to work on the "normal" way.
+```shell
+composer req smartbooster/symfony-docker
+```
+
+Then you have to reinstall bundle with option `--prefer-source`
+
+```shell
+composer reinstall smartbooster/symfony-docker --prefer-source
+```
+
+After you can open this project from vendor folder in new ide project or add a second remote.
+
+For add a second remote on phpstorm, got to Git -> Manage Remotes ... then add with "+".

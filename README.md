@@ -5,11 +5,11 @@ Development stack based on [Docker](https://www.docker.com/) to run projects wit
 ## Requirements
 
 To correctly use this stack you must have :
-- **Docker** (version ^24), 
+- **Docker** (version ^24)
 - **Docker Compose** (v2.x)
-- **Git** (^2.43).
-- Ssh connexion with gitlab
-- **make** (^4.3) (`sudo apt install make`).
+- **Git** (^2.43)
+- **make** (^4.3)
+- Ssh connexion with gitlab (for project hosted on gitlab)
 
 > We use such docker version for the multi `FROM` Dockerfile instruction to work properly.
 
@@ -17,7 +17,8 @@ Checkout our documentations if you need help to install them :
 
 - [Docker documentation](docs/docker.md)
 - [Git documentation](docs/git.md)
-- [Add gitlab ssh key](docs/gitlab_ssh.md)
+- [make documentation](docs/make.md)
+- [Add gitlab ssh key](docs/gitlab.md)
 
 ## Setup
 
@@ -236,10 +237,10 @@ BLACKFIRE_SERVER_TOKEN=your_server_token
 Checkout all [Clever Cloud related documentation here](docs/clevercloud.md).
 
 ## Other documentations
-- [How to get the .git history of an installed vendor](docs/git_history_source.md)
 - [Docker documentation](docs/docker.md)
 - [Git documentation](docs/git.md)
-- [Add gitlab ssh key](docs/gitlab_ssh.md)
+- [make documentation](docs/make.md)
+- [Add gitlab ssh key](docs/gitlab.md)
 
 ## Contributing
 
