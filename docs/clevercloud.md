@@ -65,7 +65,7 @@ You are now good to debug the downloaded server database on your local machine!
 
 ## Link the project to Clever Cloud application
 
-> Be sure to [have the Clever Cloud CLI install](https://github.com/smartbooster/symfony-docker/blob/main/docs/clevercloud.md##install-the-clever-cloud-cli) first.
+> Be sure to [have the Clever Cloud CLI install](https://github.com/smartbooster/symfony-docker/blob/main/docs/clevercloud.md#install-the-clever-cloud-cli) first.
 
 1. Use the following command to link the project to a dedicated Clever Cloud application
 

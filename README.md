@@ -232,15 +232,13 @@ BLACKFIRE_SERVER_TOKEN=your_server_token
 
 **Also, the uncommented line and your blackfire credentials changes mustn't be committed to this repository**
 
-### Clever Cloud
-
-Checkout all [Clever Cloud related documentation here](docs/clevercloud.md).
-
 ## Other documentations
 - [Docker documentation](docs/docker.md)
 - [Git documentation](docs/git.md)
 - [make documentation](docs/make.md)
 - [Add gitlab ssh key](docs/gitlab.md)
+- [Phpstorm](docs/phpstorm.md)
+- [Clevercloud](docs/clevercloud.md)
 
 ## Contributing
 
