@@ -62,15 +62,18 @@ That way you can directly test your changes in a real project situation, commit 
 
 Firstly you must require the bundle you want to work on the "normal" way.
 ```shell
-composer req smartbooster/symfony-docker
+composer require --dev smartbooster/standard-bundle
 ```
 
-Then you have to reinstall bundle with option `--prefer-source`
+Then you have to reinstall the bundle with the option `--prefer-source`
 
 ```shell
-composer reinstall smartbooster/symfony-docker --prefer-source
+# We use the --prefer-source option with the reinstall command because that way the option only target the bundle. 
+# If did it at the require step it will also fetch the git history of all the requirements of the bundle which we don't need
+# and can take some times to download.
+composer reinstall smartbooster/standard-bundle --prefer-source
 ```
 
-After you can open this project from vendor folder in new ide project or add a second remote.
+After that, you can either open the vendor folder on a new ide project instance or add a second remote dedicated to the bundle repository on your current parent project.
 
-For add a second remote on phpstorm, got to Git -> Manage Remotes ... then add with "+".
+To add a second remote on phpstorm, got to Git -> Manage Remotes ... then add with "+".
