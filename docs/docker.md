@@ -26,7 +26,15 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
-3. Verify that the Docker Engine installation is successful by running the hello-world image.
+3. Fix docker permission
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+_You need to reboot to apply the change_
+
+4. Verify that the Docker Engine installation is successful by running the hello-world image.
 
 ```bash
 sudo docker run hello-world
@@ -35,7 +43,7 @@ sudo docker run hello-world
 _This command downloads a test image and runs it in a container. When the container runs, it prints a confirmation 
 message and exits._
 
-4. Verify that Docker Compose is installed correctly by checking the version.
+5. Verify that Docker Compose is installed correctly by checking the version.
 
 ```bash
 docker compose version
@@ -60,8 +68,8 @@ following commands to clean your system :
 ```bash
 # Remove all unused containers, networks, images (both dangling and unreferenced)
 # https://docs.docker.com/engine/reference/commandline/system_prune/
-docker system prune
+docker system prune -a
 # Remove all unused local volumes. Unused local volumes are those which are not referenced by any containers. By default, it only removes anonymous volumes.
 # https://docs.docker.com/engine/reference/commandline/volume_prune/
-docker volumes prune
+docker volumes prune -a
 ```
