@@ -1,0 +1,21 @@
+name: ci
+
+on: pull_request
+
+env:
+    NODE_VERSION: 18.17.0
+
+jobs:
+    build-image:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                php_version:
+                    - 8.2
+                    - 8.1
+        steps:
+            - name: Check out repository code
+              uses: actions/checkout@v3
+
+            - name: Build image
+              run: docker build . --build-arg NODE_VERSION=$NODE_VERSION --build-arg PHP_VERSION=${{ matrix.php_version }}
