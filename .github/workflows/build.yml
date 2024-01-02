@@ -1,0 +1,44 @@
+# Inspiration : https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions
+name: Create and publish a Docker image
+
+on: [ pull_request, workflow_dispatch ]
+
+env:
+    REGISTRY: ghcr.io
+    IMAGE_NAME: ${{ github.repository }}
+    NODE_VERSION: 18.17.0
+    PHP_VERSION: 8.2
+
+jobs:
+    push:
+        runs-on: ubuntu-latest
+        permissions:
+            packages: write
+            contents: read
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v4
+            -   name: Log in to the Container registry
+                uses: docker/login-action@v3
+                with:
+                    registry: ${{ env.REGISTRY }}
+                    username: ${{ github.actor }}
+                    password: ${{ secrets.GITHUB_TOKEN }}
+            -   name: Extract metadata (tags, labels) for Docker
+                id: meta
+                uses: docker/metadata-action@v5
+                with:
+                    images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+            -   name: Test # https://docs.docker.com/build/ci/github-actions/test-before-push/
+                run: |
+                    docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+            -   name: Build and push Docker image
+                uses: docker/build-push-action@v5
+                with:
+                    context: .
+                    push: true
+                    tags: ${{ steps.meta.outputs.tags }}
+                    labels: ${{ steps.meta.outputs.labels }}
+                    build-args: |
+                        NODE_VERSION=$NODE_VERSION
+                        PHP_VERSION=$PHP_VERSION
