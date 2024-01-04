@@ -8,12 +8,13 @@ docker-fetch: ## Fetch smartbooster/symfony-docker stack files
 	git remote add docker git@github.com:smartbooster/symfony-docker.git
 	git fetch docker
 	git checkout docker/main .
+	@sleep 1 # slow down the script so it as the time to process the revision with git rev-parse
 	rm -f symfony-docker.lock
 	touch symfony-docker.lock
 	echo '{' >> symfony-docker.lock
 	echo '    "hash": "'$(shell git rev-parse docker/main)'", ' >> symfony-docker.lock
 	echo '    "fetch_time": "'$(shell date +%Y-%m-%dT%H:%M:%S)'",' >> symfony-docker.lock
-	echo '    "tag": "'$(shell git rev-parse docker/main | git tag --contains)'"' >> symfony-docker.lock
+	echo '    "tag": "'$(shell git rev-parse docker/main | xargs git tag --contains)'"' >> symfony-docker.lock
 	echo '}' >> symfony-docker.lock
 	git remote remove docker
 	make docker-post-fetch
