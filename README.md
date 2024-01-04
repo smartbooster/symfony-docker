@@ -82,6 +82,8 @@ make docker-post-fetch
 - Then do a `make up`, wait to see "MySQL init process done. Ready for start up.", and on another terminal do a `make install`.
 - Check that the project still works the same as before fetching the docker stack.
 - Check that the changes in the directories docker and make, as well as the docker-compose.yml and Dockerfile files, are consistent then commit them on your project repository.
+- Make sur your `gitlab-ci.yaml` use project env variable. An example is set into this project.
+- Change your `CC_POST_BUILD_HOOK` clever cloud environment variable by the new name of the file in `clevercloud` directory if it's need.
 
 All the steps above need to be done only once. Next you can refer to the next section to see how to fetch the latest changes of this stack.
 
