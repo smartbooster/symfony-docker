@@ -97,7 +97,12 @@ make df
 ```
 
 Relaunch the stack (`make up` + `make install` on another terminal if some changes are made on the Dockerfile or make/install.mk files).
-Check the diffs and commit any changes that feels relevant to you.
+
+> A symfony-docker.lock while be generated each time you run the docker-fetch.   
+> This file helps you to keep track of which version of the docker stack you are currently using.  
+> It should be committed on your project.
+
+Finally, check the diffs and commit any changes that feels relevant to you.
 
 ## Working on the symfony-docker stack
 
