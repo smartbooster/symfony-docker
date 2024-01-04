@@ -25,3 +25,7 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+###> smartbooster/standard-bundle ###
+/.phpcs-cache
+###< smartbooster/standard-bundle ###
