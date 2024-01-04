@@ -35,13 +35,31 @@ install-symfony: ## Install a new fresh version of symfony
 	sed '3,4c\        url: "%env(resolve:MYSQL_ADDON_URI)%"\n        server_version: "%env(resolve:MYSQL_ADDON_VERSION)%"' -i config/packages/doctrine.yaml
 	sed '5,8d' -i config/packages/doctrine.yaml
 	rm config/packages/messenger.yaml
-	docker compose exec --user=dev php composer remove symfony/doctrine-messenger
-	rm phpunit.xml.dist
+	docker compose exec --user=dev php composer remove symfony/doctrine-messenger symfony/asset-mapper
+	docker compose exec --user=dev php composer remove --dev phpunit/phpunit
+	rm -r assets
+	# Add SmartBooster bundles
+	docker compose exec --user=dev php composer config --json extra.symfony.endpoint '["https://api.github.com/repos/smartbooster/standard-bundle/contents/recipes.json", "flex://defaults"]'
+	docker compose exec --user=dev php composer require --dev --no-interaction smartbooster/standard-bundle
+	docker compose exec --user=dev php composer require --no-interaction smartbooster/core-bundle
+	git restore package.json
+	# Run Tests and database status to check that everything works fine
+	docker compose exec --user=dev php make phpunit
+	docker compose exec --user=dev php make orm-status
 	echo Install complete!
 
 .PHONY: remove-symfony
 remove-symfony: ## Remove all symfony related files of the repository
-	sudo rm -rf bin config migrations node_modules public project src templates tests translations vendor ./var/cache ./var/log/php/* composer.json composer.lock phpunit.xml.dist symfony.lock
+	sudo rm -rf bin config migrations node_modules public project src templates tests translations vendor ./var/cache ./var/log/php/* \
+		make/dev.mk \
+		make/qualimetry.mk \
+		make/test.mk \
+		composer.json \
+		composer.lock \
+		phpcs.xml \
+		phpstan.neon \
+		phpunit.xml.dist \
+		symfony.lock
 
 .PHONY: install
 install: ## Install the project. MUST BY RUN OUTSIDE OF THE DOCKER CONTAINER !
