@@ -59,7 +59,8 @@ remove-symfony: ## Remove all symfony related files of the repository
 		phpcs.xml \
 		phpstan.neon \
 		phpunit.xml.dist \
-		symfony.lock
+		symfony.lock \
+		symfony-docker.lock
 
 .PHONY: install
 install: ## Install the project. MUST BY RUN OUTSIDE OF THE DOCKER CONTAINER !

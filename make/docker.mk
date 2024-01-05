@@ -8,6 +8,13 @@ docker-fetch: ## Fetch smartbooster/symfony-docker stack files
 	git remote add docker git@github.com:smartbooster/symfony-docker.git
 	git fetch docker
 	git checkout docker/main .
+	make docker-generate-lock
+	git remote remove docker
+	make docker-post-fetch
+df: docker-fetch ## Alias for docker-fetch
+
+.PHONY: docker-generate-lock
+docker-generate-lock: ## Generate the symfony-docker.lock to track which version of the stack is install on the project
 	rm -f symfony-docker.lock
 	touch symfony-docker.lock
 	echo -n 'hash: ' >> symfony-docker.lock
@@ -15,14 +22,10 @@ docker-fetch: ## Fetch smartbooster/symfony-docker stack files
 	echo 'fetch_time: '$(shell date +%Y-%m-%dT%H:%M:%S) >> symfony-docker.lock
 	echo -n 'version: ' >> symfony-docker.lock
 	git rev-parse docker/main | xargs git tag --contains >> symfony-docker.lock
-	git remote remove docker
-	make docker-post-fetch
-df: docker-fetch ## Alias for docker-fetch
 
 .PHONY: docker-post-fetch
 docker-post-fetch: ## Post smartbooster/symfony-docker fetch process to clean unwanted files to be sync
 	git restore --staged .env.skeleton
-	rm -rf .github
 	rm -f .env.skeleton
 	git restore --staged package.json
 	git restore package.json
@@ -36,6 +39,8 @@ docker-post-fetch: ## Post smartbooster/symfony-docker fetch process to clean un
 	git restore .gitlab-ci.yml
 	git restore --staged docs
 	rm -r docs
+	git restore --staged .github
+	rm -rf .github
 	echo Fetch smartbooster/symfony-docker complete!
 
 .PHONY: check-missing-env
