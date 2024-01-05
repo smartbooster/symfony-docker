@@ -86,7 +86,10 @@ make docker-post-fetch
   - MYSQL_ADDON_URI replace your current value with mysql://dev:dev@mysql:3306/{APPLICATION} (replace {APPLICATION} with the value of APPLICATION)
 - Then do a `make up`, wait to see "MySQL init process done. Ready for start up.", and on another terminal do a `make install`.
 - Check that the project still works the same as before fetching the docker stack.
+- Make sure your `gitlab-ci.yaml` build-image and test jobs have the same content as written in this repository.
+- Be sure to add the generated symfony-docker.lock to your committed files to keep track of which version of the stack is setup on your project.
 - Check that the changes in the directories docker and make, as well as the docker-compose.yml and Dockerfile files, are consistent then commit them on your project repository.
+- On Clever Cloud, go to each environment application and check the value of the `CC_POST_BUILD_HOOK` environment variable. According to your needs, update which files should be set.
 
 All the steps above need to be done only once. Next you can refer to the next section to see how to fetch the latest changes of this stack.
 
