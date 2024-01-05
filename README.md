@@ -31,12 +31,16 @@ Depending on your current situation, choose among the following the right step t
 ### Setup the docker stack from an empty repository
 
 ```shell
+# First clone your project if you haven't and cd into it
 git clone git@gitlab.com:path/your/project-name.git
 cd project-name
+# Add the symfony-docker remote to fetch the stack files
 git remote add docker git@github.com:smartbooster/symfony-docker.git
 git fetch docker
 git checkout docker/main .
 mv .env.skeleton .env
+# Generate the lock file and remove the remote
+make docker-generate-lock
 git remote remove docker
 ```
 
@@ -70,6 +74,7 @@ Be sure that the docker stack of the project is stop before doing the following 
 git remote add docker git@github.com:smartbooster/symfony-docker.git
 git fetch docker
 git checkout docker/main .
+make docker-generate-lock
 git remote remove docker
 make docker-post-fetch
 ```
