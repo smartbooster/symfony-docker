@@ -39,6 +39,8 @@ git remote add docker git@github.com:smartbooster/symfony-docker.git
 git fetch docker
 git checkout docker/main .
 mv .env.skeleton .env
+rm -r .github docs
+rm CHANGELOG.md
 # Generate the lock file and remove the remote
 make docker-generate-lock
 git remote remove docker

@@ -27,6 +27,8 @@ docker-generate-lock: ## Generate the symfony-docker.lock to track which version
 docker-post-fetch: ## Post smartbooster/symfony-docker fetch process to clean unwanted files to be sync
 	git restore --staged .env.skeleton
 	rm -f .env.skeleton
+	git restore --staged CHANGELOG.md
+	rm -f CHANGELOG.md
 	git restore --staged package.json
 	git restore package.json
 	git restore --staged README.md
