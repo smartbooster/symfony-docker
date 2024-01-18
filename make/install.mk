@@ -35,7 +35,7 @@ install-symfony: ## Install a new fresh version of symfony
 	sed '3,4c\        url: "%env(resolve:MYSQL_ADDON_URI)%"\n        server_version: "%env(resolve:MYSQL_ADDON_VERSION)%"' -i config/packages/doctrine.yaml
 	sed '5,8d' -i config/packages/doctrine.yaml
 	rm config/packages/messenger.yaml
-	docker compose exec --user=dev php composer remove symfony/doctrine-messenger symfony/asset-mapper
+	docker compose exec --user=dev php composer remove symfony/doctrine-messenger symfony/notifier symfony/asset-mapper symfony/stimulus-bundle symfony/ux-turbo
 	docker compose exec --user=dev php composer remove --dev phpunit/phpunit
 	rm -r assets
 	# Add SmartBooster bundles
@@ -43,6 +43,8 @@ install-symfony: ## Install a new fresh version of symfony
 	docker compose exec --user=dev php composer require --dev --no-interaction smartbooster/standard-bundle
 	docker compose exec --user=dev php composer require --no-interaction smartbooster/core-bundle
 	git restore package.json
+	rm src/DataFixtures/AppFixtures.php
+	mkdir -p config/serialization
 	# Run Tests and database status to check that everything works fine
 	docker compose exec --user=dev php make phpunit
 	docker compose exec --user=dev php make orm-status
