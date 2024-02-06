@@ -1,6 +1,13 @@
 CHANGELOG for 1.x
 ===================
 
+## v1.0.5 - (2024-02-06)
+### Changed
+- Also add the `main` branch to the except branch for the test job
+
+### Removed
+- `deploy.mk` removed the GIT_BRANCH variable as it is not used anymore on deploy-revision
+
 ## v1.0.4 - (2024-01-18)
 ### Changed
 - Refactor `bundle.mk` to a more targetted use case of our bundles.
