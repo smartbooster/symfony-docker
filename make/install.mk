@@ -38,10 +38,14 @@ install-symfony: ## Install a new fresh version of symfony
 	docker compose exec --user=dev php composer remove symfony/doctrine-messenger symfony/notifier symfony/asset-mapper symfony/stimulus-bundle symfony/ux-turbo
 	docker compose exec --user=dev php composer remove --dev phpunit/phpunit
 	rm -r assets
+	# While https://github.com/getsentry/sentry-symfony/issues/806 isn't fix we wont pass to doctrine/orm:v3
+	docker compose exec --user=dev php composer require --no-interaction doctrine/orm:^2.18 doctrine/dbal:^3.8
+	# The symfony/maker-bundle update his dependencies to allow nikic/php-parser:^5 but phpmetrics/phpmetrics:^2.8 only works with the previous version so that why we downgrade it for now
+	docker compose exec --user=dev php composer require --no-interaction --dev nikic/php-parser:^4.18
 	# Add SmartBooster bundles
 	docker compose exec --user=dev php composer config --json extra.symfony.endpoint '["https://api.github.com/repos/smartbooster/standard-bundle/contents/recipes.json", "flex://defaults"]'
-	docker compose exec --user=dev php composer require --dev --no-interaction smartbooster/standard-bundle
-	docker compose exec --user=dev php composer require --no-interaction smartbooster/core-bundle
+	docker compose exec --user=dev php composer require --dev --no-interaction smartbooster/standard-bundle:^1
+	docker compose exec --user=dev php composer require --no-interaction smartbooster/core-bundle:^1
 	git restore package.json
 	rm src/DataFixtures/AppFixtures.php
 	mkdir -p config/serialization

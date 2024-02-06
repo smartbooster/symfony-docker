@@ -1,6 +1,13 @@
 CHANGELOG for 1.x
 ===================
 
+## v1.0.6 - (2024-02-06)
+### Changed
+- Ensure we still use doctrine version 2 for now because we have detected some BC break with the new version 3 such as with Sentry https://github.com/getsentry/sentry-symfony/issues/806
+
+### Added
+- Added suffix version for smartbooster install vendors 
+
 ## v1.0.5 - (2024-02-06)
 ### Changed
 - Also add the `main` branch to the except branch for the test job
