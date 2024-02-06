@@ -32,6 +32,7 @@ test:
     - docker
   except:
     - master
+    - main
   services:
     - mysql:8.0
   variables:
