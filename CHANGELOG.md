@@ -1,5 +1,8 @@
 CHANGELOG for 1.x
 ===================
+## v1.0.7 - (2024-04-06)
+### Added
+- Added php extension `gd` configuration in `Dockerfile` to work with jpeg
 
 ## v1.0.6 - (2024-02-06)
 ### Changed
