@@ -28,8 +28,6 @@ build-image:
 test:
   stage: build-test
   image: $CI_REGISTRY_IMAGE
-  tags:
-    - docker
   except:
     - master
     - main
@@ -68,8 +66,6 @@ deploy-recette:
   image:
     name: clevercloud/clever-tools:latest
     entrypoint: [ "/bin/sh", "-c" ]
-  tags:
-    - docker
   dependencies: []
   when: manual
   script:
@@ -83,8 +79,6 @@ restart-recette:
   image:
     name: clevercloud/clever-tools:latest
     entrypoint: [ "/bin/sh", "-c" ]
-  tags:
-    - docker
   dependencies: []
   when: manual
   script:
@@ -99,8 +93,6 @@ restart-recette:
 #  image:
 #    name: clevercloud/clever-tools:latest
 #    entrypoint: [ "/bin/sh", "-c" ]
-#  tags:
-#    - docker
 #  dependencies: []
 #  when: manual
 #  script:
@@ -114,8 +106,6 @@ restart-recette:
 #  image:
 #    name: clevercloud/clever-tools:latest
 #    entrypoint: [ "/bin/sh", "-c" ]
-#  tags:
-#    - docker
 #  dependencies: []
 #  when: manual
 #  script:
