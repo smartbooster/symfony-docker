@@ -1,5 +1,10 @@
 CHANGELOG for 1.x
 ===================
+## v1.0.7 - (2024-08-02)
+### Added
+- Added php extension `gd` configuration in `Dockerfile` to work with jpeg on liip imagine bundle
+### Removed
+- `.gitlab-ci.yml` removed the `tags` options because it's deprecated since Gitlab 17
 
 ## v1.0.6 - (2024-02-06)
 ### Changed
