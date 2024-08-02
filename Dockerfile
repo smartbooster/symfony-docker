@@ -34,6 +34,7 @@ COPY --from=composer_upstream --link /composer /usr/bin/composer
 
 # PHP Extensions
 RUN docker-php-ext-configure zip && \
+    docker-php-ext-configure gd --with-jpeg && \
     docker-php-ext-install -j$(nproc) intl opcache pdo_mysql zip sodium gd
 
 # Install PHP Xdebug
