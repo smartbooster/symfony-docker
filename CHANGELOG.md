@@ -1,8 +1,5 @@
 CHANGELOG for 1.x
 ===================
-## v1.0.7 - (2024-04-07)
-### Removed
-- `.gitlab-ci.yml` removed the `tags` options because it's deprecated since Gitlab 17
 
 ## v1.0.6 - (2024-02-06)
 ### Changed
