@@ -49,6 +49,10 @@ install-symfony: ## Install a new fresh version of symfony
 	git restore package.json
 	rm src/DataFixtures/AppFixtures.php
 	mkdir -p config/serialization
+	# Add default robots.txt
+	touch public/robots.txt
+	echo "User-agent: *" >> public/robots.txt
+	echo "Disallow: /" >> public/robots.txt
 	# Run Tests and database status to check that everything works fine
 	docker compose exec --user=dev php make phpunit
 	docker compose exec --user=dev php make orm-status

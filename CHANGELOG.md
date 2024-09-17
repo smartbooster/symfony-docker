@@ -1,5 +1,9 @@
 CHANGELOG for 1.x
 ===================
+## v1.0.8 - (2024-09-17)
+### Added
+- Add a default `robots.txt` during the install-symfony Makefile command
+
 ## v1.0.7 - (2024-08-02)
 ### Added
 - Added php extension `gd` configuration in `Dockerfile` to work with jpeg on liip imagine bundle
