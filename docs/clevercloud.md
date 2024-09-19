@@ -80,3 +80,24 @@ This file needs to be committed to the project repository to be parsed by the CD
 2. Then refer to the .gitlab-ci .yml file and add the dedicated application `deploy-{environment}` and `restart-{environment}` jobs with their correct `url`.
 
 You can now deploy your project through the GitLab CD jobs.
+
+## Knows issues
+
+### Apache won't correctly set the Transfer-Encoding and Content-Length headers
+
+If the Apache version on the VM of CleverCloud is equal or higher than v2.4.59 it won't automatticaly set the following headers :
+- Transfer-Encoding
+- Content-Length
+
+(cf. https://svn.apache.org/viewvc/httpd/httpd/branches/2.4.x/CHANGES?view=markup#l21)
+
+This behavior can have some side effect when creating BinaryFileResponse for example if you need to pass those headers.
+
+If you have issue with this specific problem, you can solve it by adding the following line in your `public/.htaccess` 
+
+```apacheconf
+<IfModule mod_rewrite.c>
+    # ...
+    SetEnvIfExpr "true" ap_trust_cgilike_cl=1
+</IfModule>
+```
