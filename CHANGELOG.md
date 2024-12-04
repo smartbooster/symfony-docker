@@ -1,5 +1,13 @@
 CHANGELOG for 1.x
 ===================
+## v1.0.10 - (2024-12-04)
+### Added
+- Add make crud command on bundle.mk
+
+## v1.0.9 - (2024-11-22)
+### Added
+- add doc about clevercloud know issues on Apache Content-Length header not set
+
 ## v1.0.8 - (2024-09-17)
 ### Added
 - Add a default `robots.txt` during the install-symfony Makefile command
