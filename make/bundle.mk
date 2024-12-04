@@ -26,3 +26,6 @@ platform-core-bundle-install: ## Post platform-core-bundle require command to ru
 	make orm-install
 	echo Bundle install complete!
 pcbi: platform-core-bundle-install ## Alias for platform-core-bundle-install
+
+crud: ## platform-core-bundle command to generate CRUDController
+	$(CONSOLE) make:smart:crud
