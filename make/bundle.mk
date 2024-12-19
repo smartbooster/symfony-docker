@@ -29,3 +29,5 @@ pcbi: platform-core-bundle-install ## Alias for platform-core-bundle-install
 
 crud: ## platform-core-bundle command to generate CRUDController
 	$(CONSOLE) make:smart:crud
+crud-fake: ## platform-core-bundle command to generate fake CRUDController
+	$(CONSOLE) make:smart:crud --fake

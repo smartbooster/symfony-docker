@@ -1,5 +1,9 @@
 CHANGELOG for 1.x
 ===================
+## v1.0.11 - (2024-12-19)
+### Added
+- Add make crud-fake command on bundle.mk
+
 ## v1.0.10 - (2024-12-04)
 ### Added
 - Add make crud command on bundle.mk
