@@ -18,7 +18,9 @@ jobs:
         strategy:
             matrix:
                 php_data:
-                    - {php_version: 8.2, push: true}
+                    - {php_version: 8.4, push: true}
+                    - {php_version: 8.3, push: true}
+                    - {php_version: 8.2, push: false}
                     - {php_version: 8.1, push: false}
         # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
         permissions:
