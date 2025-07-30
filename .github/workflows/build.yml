@@ -9,7 +9,7 @@ env:
     REGISTRY: ghcr.io
     # Name for the Docker image
     IMAGE_NAME: ${{ github.repository }}
-    NODE_VERSION: 18.17.0
+    NODE_VERSION: 22.17
 
 # There is a single job in this workflow. It's configured to run on the latest available version of Ubuntu.
 jobs:
@@ -18,7 +18,9 @@ jobs:
         strategy:
             matrix:
                 php_data:
-                    - {php_version: 8.2, push: true}
+                    - {php_version: 8.4, push: true}
+                    - {php_version: 8.3, push: false}
+                    - {php_version: 8.2, push: false}
                     - {php_version: 8.1, push: false}
         # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
         permissions:
