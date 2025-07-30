@@ -1,5 +1,11 @@
 CHANGELOG for 1.x
 ===================
+## v1.1.0 - (2025-07-30)
+### Changed
+- `.env` Update PHP_VERSION & NODE_VERSION vars to 8.4 and 22.17
+- `docker-compose` Update PHP_VERSION & NODE_VERSION default build vars to 8.4 and 22.17
+- `.github/workflows/build.yaml` Update NODE_VERSION to 22.17
+
 ## v1.0.11 - (2024-12-19)
 ### Added
 - Add make crud-fake command on bundle.mk
