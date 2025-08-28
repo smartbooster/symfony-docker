@@ -1,5 +1,9 @@
 CHANGELOG for 1.x
 ===================
+## v1.1.1 - (2025-08-18)
+### Fixed
+- `Dockerfile` Fix yarn installation - the `apt-key` command has been deprecated and removed in recent Debian/Ubuntu versions
+
 ## v1.1.0 - (2025-07-30)
 ### Changed
 - `.env` Update PHP_VERSION & NODE_VERSION vars to 8.4 and 22.17
