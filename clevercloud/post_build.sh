@@ -1,3 +1,6 @@
+# Stop on error
+set -e
+
 # Deploy Update
 make deploy-revision
 make update ENV=prod
