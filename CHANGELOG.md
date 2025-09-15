@@ -1,5 +1,9 @@
 CHANGELOG for 1.x
 ===================
+## v1.1.2 - (2025-09-15)
+### Added
+- Add `set -e` to stop the script on error in Clever Cloud post build hook.
+
 ## v1.1.1 - (2025-08-18)
 ### Fixed
 - `Dockerfile` Fix yarn installation - the `apt-key` command has been deprecated and removed in recent Debian/Ubuntu versions
