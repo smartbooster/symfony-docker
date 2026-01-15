@@ -3,7 +3,7 @@
 # Versions
 ARG NODE_VERSION
 ARG PHP_VERSION
-FROM composer/composer:2-bin AS composer_upstream
+FROM composer/composer:2.9-bin AS composer_upstream
 FROM node:${NODE_VERSION} AS node
 FROM php:${PHP_VERSION}-apache AS php_base
 
@@ -83,6 +83,7 @@ RUN apt-get autoremove -y --purge \
 # Add dev user
 ARG DEV_UID=1000
 RUN useradd --shell /bin/bash -u $DEV_UID -o -c "" -m dev
+RUN mkdir -p /tmp/docker_xdebug/command && chown -R $DEV_UID:$DEV_UID /tmp/docker_xdebug/command
 RUN export HOME=/home/dev
 RUN adduser dev sudo
 COPY --link docker/.gitconfig /home/dev/.gitconfig

@@ -11,6 +11,8 @@ platform-core-bundle-install: ## Post platform-core-bundle require command to ru
 	sh $(PLATFORM_CORE_SCRIPTS)/fetch_src.sh
 	sh $(PLATFORM_CORE_SCRIPTS)/fetch_templates.sh
 	sh $(PLATFORM_CORE_SCRIPTS)/fetch_tests.sh
+	mkdir documentation
+	cp ./vendor/smartbooster/platform-core-bundle/stubs/documentation/* ./documentation
 	# Redéfinition du cache:clear en 2 temps
 	composer config --unset scripts.auto-scripts.'assets:install %PUBLIC_DIR%'
 	composer config --unset scripts.auto-scripts.cache:clear
@@ -24,6 +26,9 @@ platform-core-bundle-install: ## Post platform-core-bundle require command to ru
 	yarn install
 	make assets-dev
 	make orm-install
+	printf "\t\$$(CONSOLE) cmd:smart-entity-schema-load --env=\$$(ENV)\n" >> make/install.mk
+	printf "\t\$$(CONSOLE) cmd:smart-editable-email-load --env=\$$(ENV)\n" >> make/install.mk
+	printf "\t\$$(CONSOLE) cmd:smart-parameter-load --env=\$$(ENV)\n" >> make/install.mk
 	echo Bundle install complete!
 pcbi: platform-core-bundle-install ## Alias for platform-core-bundle-install
 

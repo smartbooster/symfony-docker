@@ -44,6 +44,7 @@ rm CHANGELOG.md
 # Generate the lock file and remove the remote
 make docker-generate-lock
 git remote remove docker
+git tag -d $(git tag -l)
 ```
 
 Replace the string *to_replace* in the **APPLICATION** env variable with the client-project format from the project repository.

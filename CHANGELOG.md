@@ -1,5 +1,14 @@
 CHANGELOG for 1.x
 ===================
+## v1.2.0 - (2026-01-15)
+### Changed
+- `.env` Update NODE_VERSION vars to 24.11.1
+- `bundle.mk` add documentation from stubs for install command and complete `install.mk` with smart commands
+- `install.mk` fixed the SYMFONY_INSTALL_VERSION to 6.4 until we are ready to move to 7.4 (prerequisites handle doctrine orm 3 update & mysql 8.4)
+- `docker-compose.yml` remove deprecated version attribut, comment blackfire service in favor of KCachegrind, add minio service for local S3
+- `Dockerfile` add missing directory for sf command xdebug profile
+- `README.md` step added to remove symfony-docker tags when installing it on an empty repository
+
 ## v1.1.2 - (2025-09-15)
 ### Added
 - Add `set -e` to stop the script on error in Clever Cloud post build hook.
