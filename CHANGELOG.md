@@ -1,5 +1,9 @@
 CHANGELOG for 1.x
 ===================
+## v1.2.1 - (2026-01-15)
+### Fixed
+- `install.mk` add var/storage/default directory creation and set permissions needed by flysystem during sb platform bundle install
+
 ## v1.2.0 - (2026-01-15)
 ### Changed
 - `.env` Update NODE_VERSION vars to 24.11.1
