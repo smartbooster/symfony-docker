@@ -44,6 +44,8 @@ install-symfony: ## Install a new fresh version of symfony
 	# While https://github.com/getsentry/sentry-symfony/issues/806 isn't fix we wont pass to doctrine/orm:v3
 	docker compose exec --user=dev php composer require --no-interaction doctrine/doctrine-bundle:^2.18 doctrine/doctrine-migrations-bundle:^3.4 doctrine/persistence:^3.4 doctrine/orm:^2.18 doctrine/dbal:^3.8
 	# Add SmartBooster bundles
+	docker compose exec --user=dev php composer config name "client/project"
+	docker compose exec --user=dev php composer config description "Project description"
 	docker compose exec --user=dev php composer config --json extra.symfony.endpoint '["https://api.github.com/repos/smartbooster/standard-bundle/contents/recipes.json", "flex://defaults"]'
 	docker compose exec --user=dev php composer config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
 	docker compose exec --user=dev php composer remove phpdocumentor/reflection-docblock
