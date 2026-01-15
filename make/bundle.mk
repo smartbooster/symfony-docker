@@ -14,6 +14,7 @@ platform-core-bundle-install: ## Post platform-core-bundle require command to ru
 	mkdir documentation
 	cp ./vendor/smartbooster/platform-core-bundle/stubs/documentation/* ./documentation
 	cp ./vendor/smartbooster/platform-core-bundle/stubs/README.md ./README.md
+	cp ./vendor/smartbooster/platform-core-bundle/stubs/.php-cs-fixer.dist.php ./.php-cs-fixer.dist.php
 	# Redéfinition du cache:clear en 2 temps
 	composer config --unset scripts.auto-scripts.'assets:install %PUBLIC_DIR%'
 	composer config --unset scripts.auto-scripts.cache:clear

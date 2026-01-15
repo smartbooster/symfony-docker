@@ -1,5 +1,10 @@
 CHANGELOG for 1.x
 ===================
+## v1.2.4 - (2026-01-15)
+### Added
+- `bundle.mk` Init .php-cs-fixer.dist.php from platform-bundle stubs
+- `install.mk` Init composer **name** and **description** attribut.
+
 ## v1.2.3 - (2026-01-15)
 ### Added
 - `bundle.mk` Call `make cbf` before finishing the platform-core-bundle-install command.
