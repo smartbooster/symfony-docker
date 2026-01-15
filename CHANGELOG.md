@@ -1,5 +1,9 @@
 CHANGELOG for 1.x
 ===================
+## v1.2.5 - (2026-01-15)
+### Added
+- `bundle.mk` Call `make sfcs-fix` before finishing the platform-core-bundle-install command.
+
 ## v1.2.4 - (2026-01-15)
 ### Added
 - `bundle.mk` Init .php-cs-fixer.dist.php from platform-bundle stubs

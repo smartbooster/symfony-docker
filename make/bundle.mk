@@ -32,6 +32,7 @@ platform-core-bundle-install: ## Post platform-core-bundle require command to ru
 	printf "\t\$$(CONSOLE) cmd:smart-editable-email-load --env=\$$(ENV)\n" >> make/install.mk
 	printf "\t\$$(CONSOLE) cmd:smart-parameter-load --env=\$$(ENV)\n" >> make/install.mk
 	make cbf
+	make sfcs-fix
 	echo Bundle install complete!
 pcbi: platform-core-bundle-install ## Alias for platform-core-bundle-install
 
