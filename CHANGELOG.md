@@ -1,5 +1,9 @@
 CHANGELOG for 1.x
 ===================
+## v1.2.3 - (2026-01-15)
+### Added
+- `bundle.mk` Call `make cbf` before finishing the platform-core-bundle-install command.
+
 ## v1.2.2 - (2026-01-15)
 ### Fixed
 - `bundle.mk` Add missing copy README.md for the platform-core-bundle-install command.
