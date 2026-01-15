@@ -13,6 +13,7 @@ platform-core-bundle-install: ## Post platform-core-bundle require command to ru
 	sh $(PLATFORM_CORE_SCRIPTS)/fetch_tests.sh
 	mkdir documentation
 	cp ./vendor/smartbooster/platform-core-bundle/stubs/documentation/* ./documentation
+	cp ./vendor/smartbooster/platform-core-bundle/stubs/README.md ./README.md
 	# Redéfinition du cache:clear en 2 temps
 	composer config --unset scripts.auto-scripts.'assets:install %PUBLIC_DIR%'
 	composer config --unset scripts.auto-scripts.cache:clear

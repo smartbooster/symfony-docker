@@ -1,5 +1,9 @@
 CHANGELOG for 1.x
 ===================
+## v1.2.2 - (2026-01-15)
+### Fixed
+- `bundle.mk` Add missing copy README.md for the platform-core-bundle-install command.
+
 ## v1.2.1 - (2026-01-15)
 ### Fixed
 - `install.mk` add var/storage/default directory creation and set permissions needed by flysystem during sb platform bundle install
