@@ -9,6 +9,8 @@ init-rw-files: ## Fix rights of var & public/files folders
 	mkdir -p public/files
 	sudo chmod -R 777 public/files
 	sudo chmod -R 777 docker/xdebug_profile
+	sudo mkdir -p ./var/storage/default
+	sudo chmod -R 777 ./var/storage
 
 SYMFONY_INSTALL_VERSION?=6.4
 .PHONY: install-symfony
