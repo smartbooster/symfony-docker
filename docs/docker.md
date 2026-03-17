@@ -54,6 +54,32 @@ Docker Compose version vN.N.N
 
 _Instructions taken from [docker official install guide](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository) and [compose plugin install guide](https://docs.docker.com/compose/install/linux/#install-using-the-repository)._ 
 
+## Update Docker version
+
+To check your current Docker Engine version use the command : `docker version`
+
+# 1. Remove the old installation
+sudo apt remove docker.io docker-compose docker-doc containerd runc
+
+# 2. Install dependencies
+sudo apt install ca-certificates curl
+
+# 3. Add the official GPG key
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# 4. Add the official repository
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
+https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo $VERSION_CODENAME) stable" | \
+sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# 5. Update and install
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+Now check again the version which should be the latest version.
+
 ## Clean unused docker images and volumes
 
 First you can scan how much disk space docker used with the following command :
