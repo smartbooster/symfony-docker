@@ -20,7 +20,7 @@ install-symfony: ## Install a new fresh version of symfony
 	echo "" >> .env
 	echo "###> doctrine/doctrine-bundle ###" >> .env
 	echo "MYSQL_ADDON_URI=mysql://dev:dev@mysql:3306/$(shell cat .env | grep APPLICATION= | cut -d= -f2)" >> .env
-	echo "MYSQL_ADDON_VERSION=8.0" >> .env
+	echo "MYSQL_VERSION=8.0.44" >> .env
 	echo "###< doctrine/doctrine-bundle ###" >> .env
 	rm -f .env.skeleton
 	# Install SF project in a temporary folder
@@ -34,15 +34,15 @@ install-symfony: ## Install a new fresh version of symfony
 	rm -rf project
 	make init-rw-files
 	# Fix doctrine.yaml + removal of unnecessary bundles/files from SF webapp
-	sed '3,4c\        url: "%env(resolve:MYSQL_ADDON_URI)%"\n        server_version: "%env(resolve:MYSQL_ADDON_VERSION)%"' -i config/packages/doctrine.yaml
+	sed '3,4c\        url: "%env(resolve:MYSQL_ADDON_URI)%"\n        server_version: "%env(resolve:MYSQL_VERSION)%"' -i config/packages/doctrine.yaml
 	sed '5,8d' -i config/packages/doctrine.yaml
 	rm config/packages/messenger.yaml
 	docker compose exec --user=dev php composer remove symfony/doctrine-messenger symfony/notifier symfony/asset-mapper symfony/stimulus-bundle symfony/ux-turbo
 	docker compose exec --user=dev php composer remove --dev phpunit/phpunit
 	docker compose exec --user=dev php composer require --dev symfony/phpunit-bridge:^7.3
 	rm -r assets
-	# While https://github.com/getsentry/sentry-symfony/issues/806 isn't fix we wont pass to doctrine/orm:v3
-	docker compose exec --user=dev php composer require --no-interaction doctrine/doctrine-bundle:^2.18 doctrine/doctrine-migrations-bundle:^3.4 doctrine/persistence:^3.4 doctrine/orm:^2.18 doctrine/dbal:^3.8
+	# We allow doctrine/orm:v3 but now we need to process doctrine-bundle upgrade to v3 and migration to v4
+	docker compose exec --user=dev php composer require --no-interaction doctrine/doctrine-bundle:^2.18 doctrine/doctrine-migrations-bundle:^3.4
 	# Add SmartBooster bundles
 	docker compose exec --user=dev php composer config name "client/project"
 	docker compose exec --user=dev php composer config description "Project description"
@@ -50,7 +50,8 @@ install-symfony: ## Install a new fresh version of symfony
 	docker compose exec --user=dev php composer config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
 	docker compose exec --user=dev php composer remove phpdocumentor/reflection-docblock
 	docker compose exec --user=dev php composer require --dev --no-interaction smartbooster/standard-bundle:^1
-	docker compose exec --user=dev php composer require --no-interaction smartbooster/core-bundle:^1
+	# From friendsofphp/php-cs-fixer:^3.94 it allow sebastian/diff v8 but then it create a conflict with nelmio/alice which needs v7 so i fixed it here
+	docker compose exec --user=dev php composer require --no-interaction sebastian/diff:^7.0 smartbooster/core-bundle:^1
 	git restore package.json
 	rm src/DataFixtures/AppFixtures.php
 	mkdir -p config/serialization

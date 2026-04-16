@@ -1,5 +1,12 @@
 CHANGELOG for 1.x
 ===================
+## v1.3.0 - (2026-04-16)
+### Changed
+- `.gitlab-ci.yml` Rename `MYSQL_ADDON_VERSION` CI variable to `MYSQL_VERSION`
+- `install.mk` Rename `MYSQL_ADDON_VERSION` to `MYSQL_VERSION` (value updated to `8.0.44`) in `.env` and `doctrine.yaml` generation because the patch version is now required on doctrine/orm v3
+- `install.mk` Allow `doctrine/orm` v3 — removed pinned `doctrine/orm:^2.18` and `doctrine/persistence:^3.4` from composer require
+- `install.mk` Pin `sebastian/diff:^7.0` to avoid conflict between `friendsofphp/php-cs-fixer:^3.94` and `nelmio/alice` (which requires v7)
+
 ## v1.2.5 - (2026-01-15)
 ### Added
 - `bundle.mk` Call `make sfcs-fix` before finishing the platform-core-bundle-install command.
