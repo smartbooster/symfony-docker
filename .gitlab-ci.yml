@@ -39,7 +39,7 @@ test:
     MYSQL_USER: dev
     MYSQL_PASSWORD: dev
     MYSQL_ADDON_URI: mysql://dev:dev@mysql:3306/ci-db
-    MYSQL_VERSION: '8.0'
+    MYSQL_VERSION: '8.0.44'
     XDEBUG_MODE: 'off'
   coverage: /^\s*Lines:\s*\d+.\d+\%/
   artifacts:
