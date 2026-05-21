@@ -1,5 +1,9 @@
 CHANGELOG for 1.x
 ===================
+## v1.3.2 - (2026-05-21)
+### Fixed
+- Clarify Doctrine bundle version constraints in `install.mk`
+
 ## v1.3.1 - (2026-04-17)
 ### Fixed
 - `gitlab-ci.yml` Patch the MYSQL_VERSION for CI
