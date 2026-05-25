@@ -41,7 +41,7 @@ install-symfony: ## Install a new fresh version of symfony
 	docker compose exec --user=dev php composer remove --dev phpunit/phpunit
 	docker compose exec --user=dev php composer require --dev symfony/phpunit-bridge:^7.3
 	rm -r assets
-	# We allow doctrine/orm:v3 but now we need to process doctrine-bundle upgrade to v3 and migration to v4
+	# Locked doctrine-bundle in v2 because yokai/security-token-bundle is incompatible with v3. Delayed doctrine-migration to v4 for now as there are no immediate benefits/required features.
 	docker compose exec --user=dev php composer require --no-interaction doctrine/doctrine-bundle:^2.18 doctrine/doctrine-migrations-bundle:^3.4
 	# Add SmartBooster bundles
 	docker compose exec --user=dev php composer config name "client/project"
