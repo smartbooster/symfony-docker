@@ -21,7 +21,7 @@ build-image:
     - echo $PHP_VERSION
     - echo $NODE_VERSION
     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
-    - docker build --build-arg PHP_VERSION=$PHP_VERSION --build-arg NODE_VERSION=$NODE_VERSION -t $CI_REGISTRY_IMAGE .
+    - docker build --provenance=false --build-arg PHP_VERSION=$PHP_VERSION --build-arg NODE_VERSION=$NODE_VERSION -t $CI_REGISTRY_IMAGE .
     - docker push $CI_REGISTRY_IMAGE
   when: manual
 

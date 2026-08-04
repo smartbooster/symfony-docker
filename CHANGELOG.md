@@ -1,5 +1,9 @@
 CHANGELOG for 1.x
 ===================
+## v1.3.3 - (2026-08-04)
+### Fixed
+- CI: added `--provenance=false` to the docker build command to prevent BuildKit from attaching OCI provenance attestations, which the self-hosted registry rejected with blob unknown to registry. Images now push successfully.
+
 ## v1.3.2 - (2026-05-21)
 ### Fixed
 - Clarify Doctrine bundle version constraints in `install.mk`
