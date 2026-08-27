@@ -1,0 +1,25 @@
+# Accepted exceptions for the development image (dockle).
+# Production runs on Clever Cloud, this image is only used locally and in CI.
+# Any new finding not listed here must be fixed, not appended in a hurry.
+
+# sudo is installed on purpose: devs need it from `make ssh`, which logs them in
+# as the unprivileged `dev` user.
+DKL-DI-0001
+
+# Direct consequence of the line above (sudo is a setuid root binary).
+# suexec, the other setuid binary shipped by apache2, has been removed instead.
+CIS-DI-0008
+
+# The image ends as root because Apache must bind port 80 then drop privileges,
+# and the php-fpm master must be able to spawn its workers.
+# Devs work as non-root through `make ssh` (--user=dev).
+CIS-DI-0001
+
+# Development image, rebuilt constantly and referenced by name in
+# docker-compose.yml, the Makefile and the CI. This rule targets deployed images.
+DKL-DI-0006
+
+# DOCKER_CONTENT_TRUST would break the build: the third-party images in use
+# (surnet/alpine-wkhtmltopdf, composer/composer) are not signed through DCT.
+# Integrity is covered differently: the Surnet image is pinned by digest.
+CIS-DI-0005

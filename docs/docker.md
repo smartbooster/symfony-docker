@@ -109,3 +109,34 @@ docker system prune -a
 # https://docs.docker.com/engine/reference/commandline/volume_prune/
 docker volumes prune -a
 ```
+
+## Monitor CVE and lint format on Dockerfile
+
+Like the application code, the Dockerfile and the image it builds must be audited. Three tools are wired in the
+Makefile for that purpose:
+
+- **[hadolint](https://github.com/hadolint/hadolint)** : lints the `Dockerfile` syntax and best practices.
+- **[dockle](https://github.com/goodwithtech/dockle)** : checks the built image against container security best
+practices (setuid binaries, root user, secrets, ...).
+- **[osv-scanner](https://github.com/google/osv-scanner)** : lists the known vulnerabilities (CVE) of the system and
+PHP packages installed in the image.
+
+*All tools are run through their own docker image so there are no install setup requirement.*
+
+```bash
+# Run the three scans at once
+make docker-scan
+
+# Or run them individually
+make docker-lint
+make docker-scan-dockle
+make docker-scan-osv
+
+# Same OSV scan served as an HTML report on http://localhost:8000/
+make docker-scan-osv-html
+```
+
+The scans run on the image built by `make build`, so rebuild it before scanning to audit your latest changes.
+
+Accepted dockle exceptions are listed and justified in the `.dockleignore` file at the project root. Any new finding
+must be fixed rather than appended to that file.

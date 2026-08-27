@@ -86,3 +86,47 @@ ssh-root: ## Access to the php container in interactive mode as root
 .PHONY: mysql
 mysql: ## Access to the mysql container in interactive mode
 	docker compose exec --user=mysql mysql bash
+
+##
+## Docker image security scans
+## ---------------------------
+DOCKER_IMAGE := $(shell grep '^APPLICATION=' .env | cut -d= -f2)php:latest
+# osv-scanner and dockle are run through docker (nothing to install). Their images have no docker cli,
+# so the local image is exported as an archive in a temporary directory and scanned from there, then cleaned up.
+SCAN_SAVE_IMAGE := dir=$$(mktemp -d); docker save $(DOCKER_IMAGE) -o "$$dir/image.tar"
+# Cleanup done explicitly at the end of each target (an EXIT trap is not run when sh execs the last command)
+SCAN_CLEANUP := status=$$?; rm -rf "$$dir"; exit $$status
+SCAN_DOCKER_RUN := docker run --rm -v "$$dir":/archive:ro
+OSV_SCAN_IMAGE := ghcr.io/google/osv-scanner:latest scan image --archive /archive/image.tar
+DOCKLE_SCAN_IMAGE := goodwithtech/dockle:latest --exit-code 1 --exit-level warn --input /archive/image.tar
+
+.PHONY: docker-scan-osv
+docker-scan-osv: ## Scan the docker image vulnerabilities (CVE) with osv-scanner (run through docker, nothing to install)
+	@$(SCAN_SAVE_IMAGE); \
+	$(SCAN_DOCKER_RUN) $(OSV_SCAN_IMAGE); \
+	$(SCAN_CLEANUP)
+
+.PHONY: docker-scan-osv-html
+docker-scan-osv-html: ## Scan the docker image with OSV and serve an HTML report available on http://localhost:8000/
+	@$(SCAN_SAVE_IMAGE); \
+	$(SCAN_DOCKER_RUN) -i -p 8000:8000 $(OSV_SCAN_IMAGE) --serve; \
+	$(SCAN_CLEANUP)
+
+.PHONY: docker-lint
+docker-lint: ## Lint the Dockerfile with hadolint (run through docker, nothing to install)
+	docker run --rm -i hadolint/hadolint < Dockerfile && echo "hadolint: no issue found"
+
+.PHONY: docker-scan-dockle
+docker-scan-dockle: ## Check the docker image best practices with dockle (run through docker, nothing to install)
+	# The .dockleignore of the project root is mounted in the container so that its exceptions are applied
+	@$(SCAN_SAVE_IMAGE); \
+	$(SCAN_DOCKER_RUN) -v "$(PWD)/.dockleignore":/project/.dockleignore:ro -w /project $(DOCKLE_SCAN_IMAGE) \
+	&& echo "dockle: no issue found"; \
+	$(SCAN_CLEANUP)
+
+.PHONY: docker-scan
+docker-scan: ## Run all the docker image security scans (osv-scanner + hadolint + dockle)
+	make docker-lint
+	make docker-scan-dockle
+	make docker-scan-osv
+
