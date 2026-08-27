@@ -8,6 +8,8 @@ services:
         PHP_VERSION: ${PHP_VERSION:-8.4}
     ports:
       - "80:80"
+      # Dev-server Vite (make assets-dev)
+      - "5173:5173"
     volumes:
       - ./:/app
       - ./var/log/php/:/app/var/log
