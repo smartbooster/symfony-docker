@@ -32,14 +32,14 @@ test:
     - master
     - main
   services:
-    - mysql:8.0
+    - mysql:8.4.8
   variables:
     MYSQL_DATABASE: ci-db
     MYSQL_ROOT_PASSWORD: root
     MYSQL_USER: dev
     MYSQL_PASSWORD: dev
     MYSQL_ADDON_URI: mysql://dev:dev@mysql:3306/ci-db
-    MYSQL_VERSION: '8.0.44'
+    MYSQL_VERSION: '8.4.8'
     XDEBUG_MODE: 'off'
   coverage: /^\s*Lines:\s*\d+.\d+\%/
   artifacts:

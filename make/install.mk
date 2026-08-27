@@ -20,7 +20,7 @@ install-symfony: ## Install a new fresh version of symfony
 	echo "" >> .env
 	echo "###> doctrine/doctrine-bundle ###" >> .env
 	echo "MYSQL_ADDON_URI=mysql://dev:dev@mysql:3306/$(shell cat .env | grep APPLICATION= | cut -d= -f2)" >> .env
-	echo "MYSQL_VERSION=8.0.44" >> .env
+	echo "MYSQL_VERSION=8.4.8" >> .env
 	echo "###< doctrine/doctrine-bundle ###" >> .env
 	rm -f .env.skeleton
 	# Install SF project in a temporary folder
