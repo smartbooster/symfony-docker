@@ -8,6 +8,8 @@ services:
         PHP_VERSION: ${PHP_VERSION:-8.4}
     ports:
       - "80:80"
+      # Dev-server Vite (make assets-dev)
+      - "5173:5173"
     volumes:
       - ./:/app
       - ./var/log/php/:/app/var/log
@@ -22,7 +24,7 @@ services:
       NODE_OPTIONS: ${NODE_OPTIONS:-}
 
   mysql:
-    image: mysql:8.0
+    image: mysql:8.4.8
     environment:
       MYSQL_DATABASE: ${APPLICATION:-project_database}
       MYSQL_ROOT_PASSWORD: root

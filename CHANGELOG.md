@@ -1,5 +1,18 @@
 CHANGELOG for 1.x
 ===================
+## v1.4.0 - (2026-08-27)
+### Added
+- `docker.mk` add security scan targets (osv-scanner, hadolint, dockle) and update `docker.md` doc accordingly.
+- `docker-compose.yml` allow 5173 port binding for projects using Vite as asset bundler.
+
+### Changed
+- `install.mk`, `gitlab-ci` and `docker-compose.yml` Bumped Mysql version from 8.0.44 to 8.4.8 which is the latest version available on Clever Cloud at the moment.
+- `install.mk` Add double colon on the update make command to allow adding extra behavior for that command on makefile load after the install.md
+- `Dockerfile` Reworked the php image on Alpine with php-fpm behind Apache (mod_proxy_fcgi) to match the Clever Cloud runtime
+
+### Fixed
+- `bundle.mk` Fix end make command on platform-core-bundle-install to call cs-fix
+
 ## v1.3.3 - (2026-08-04)
 ### Fixed
 - CI: added `--provenance=false` to the docker build command to prevent BuildKit from attaching OCI provenance attestations, which the self-hosted registry rejected with blob unknown to registry. Images now push successfully.
