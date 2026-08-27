@@ -99,6 +99,6 @@ install-script: ## Install script using project packages config and setting up d
 	echo Install complete!
 
 .PHONY: update
-update: ## Update the project (database migration, custom project command, ...)
+update:: ## Update the project (database migration, custom project command, ...)
 	make orm-update
 	make orm-status
