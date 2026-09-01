@@ -114,7 +114,7 @@ docker-scan-osv-html: ## Scan the docker image with OSV and serve an HTML report
 
 .PHONY: docker-lint
 docker-lint: ## Lint the Dockerfile with hadolint (run through docker, nothing to install)
-	docker run --rm -i hadolint/hadolint < Dockerfile && echo "hadolint: no issue found"
+	docker run --rm -v $(CURDIR):/work -w /work hadolint/hadolint hadolint Dockerfile && echo "hadolint: no issue found"
 
 .PHONY: docker-scan-dockle
 docker-scan-dockle: ## Check the docker image best practices with dockle (run through docker, nothing to install)

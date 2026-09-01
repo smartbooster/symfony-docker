@@ -1,5 +1,9 @@
 CHANGELOG for 1.x
 ===================
+## v1.4.1 - (2026-09-01)
+### Fixed
+- `docker.mk` Mount the project directory in the `docker-lint` container and pass the `Dockerfile` as an argument instead of piping it on stdin, so an eventual `.hadolint.yaml` config file at the project root is taken into account by hadolint.
+
 ## v1.4.0 - (2026-08-27)
 ### Added
 - `docker.mk` add security scan targets (osv-scanner, hadolint, dockle) and update `docker.md` doc accordingly.
