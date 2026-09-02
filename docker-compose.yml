@@ -4,8 +4,8 @@ services:
     build:
       context: .
       args:
-        NODE_VERSION: ${NODE_VERSION:-22.17}
-        PHP_VERSION: ${PHP_VERSION:-8.4}
+        NODE_VERSION: ${NODE_VERSION}
+        PHP_VERSION: ${PHP_VERSION}
     ports:
       - "80:80"
       # Dev-server Vite (make assets-dev)
@@ -24,7 +24,7 @@ services:
       NODE_OPTIONS: ${NODE_OPTIONS:-}
 
   mysql:
-    image: mysql:8.4.8
+    image: mysql:${MYSQL_VERSION}
     environment:
       MYSQL_DATABASE: ${APPLICATION:-project_database}
       MYSQL_ROOT_PASSWORD: root
