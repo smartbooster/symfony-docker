@@ -1,5 +1,10 @@
 CHANGELOG for 1.x
 ===================
+## v1.4.2 - (2026-09-02)
+### Fixed
+- `docker-compose.yml` remove fallback version to ensure ENV variables are defined and reduce diff surface when updating them.
+- `.env.skeleton` force patch version needed for doctrine/orm v3
+
 ## v1.4.1 - (2026-09-01)
 ### Fixed
 - `docker.mk` Mount the project directory in the `docker-lint` container and pass the `Dockerfile` as an argument instead of piping it on stdin, so an eventual `.hadolint.yaml` config file at the project root is taken into account by hadolint.
