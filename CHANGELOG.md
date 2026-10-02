@@ -1,5 +1,11 @@
 CHANGELOG for 1.x
 ===================
+## v1.4.3 - (2026-09-02)
+### Fixed
+- `apache.conf` add security headers (HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy) on all responses, and a restrictive Content-Security-Policy on static files served directly by Apache since they bypass
+  the application CSP.
+- `.env.skeleton` move MYSQL_VERSION from the `install.mk` directly in the .env.skeleton to better follow technology version handle by the docker stack.
+
 ## v1.4.2 - (2026-09-02)
 ### Fixed
 - `docker-compose.yml` remove fallback version to ensure ENV variables are defined and reduce diff surface when updating them.
