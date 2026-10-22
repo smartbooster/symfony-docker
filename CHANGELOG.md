@@ -1,5 +1,10 @@
 CHANGELOG for 1.x
 ===================
+## v1.4.4 - (2026-10-22)
+### Fixed
+- `.gitlab-ci.yml` fix the coverage regex pattern to support ANSI color codes in the output and capture the `Lines:` percentage value.
+- `README.md` add the missing MYSQL_VERSION in the list of variables to define when fetching the docker stack on an existing project.
+
 ## v1.4.3 - (2026-09-02)
 ### Fixed
 - `apache.conf` add security headers (HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy) on all responses, and a restrictive Content-Security-Policy on static files served directly by Apache since they bypass
