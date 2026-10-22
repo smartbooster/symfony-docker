@@ -86,6 +86,7 @@ make docker-post-fetch
   - APPLICATION 
   - PHP_VERSION
   - NODE_VERSION
+  - MYSQL_VERSION
   - MYSQL_ADDON_URI replace your current value with mysql://dev:dev@mysql:3306/{APPLICATION} (replace {APPLICATION} with the value of APPLICATION)
 - Then do a `make up`, wait to see "MySQL init process done. Ready for start up.", and on another terminal do a `make install`.
 - Check that the project still works the same as before fetching the docker stack.
