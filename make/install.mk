@@ -100,4 +100,5 @@ install-script: ## Install script using project packages config and setting up d
 .PHONY: update
 update:: ## Update the project (database migration, custom project command, ...)
 	make orm-update
+	make orm-show-diff
 	make orm-status

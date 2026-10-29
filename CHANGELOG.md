@@ -1,5 +1,9 @@
 CHANGELOG for 1.x
 ===================
+## v1.4.5 - (2026-10-29)
+### Changed
+- `install.mk` add the `make orm-show-diff` on the `make update` command to detected extra sql query (unmapped table, ...) that can lead to a desynch `orm-status`  
+
 ## v1.4.4 - (2026-10-22)
 ### Fixed
 - `.gitlab-ci.yml` fix the coverage regex pattern to support ANSI color codes in the output and capture the `Lines:` percentage value.
