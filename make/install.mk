@@ -90,7 +90,7 @@ endif
 .PHONY: install-script
 install-script: ## Install script using project packages config and setting up db (must be call on the php container, use it also on CI)
 	composer install
-	yarn install
+	npm ci
 	make assets-dev
 	# Stopping the install at this step if the doctrine-fixtures-bundle is not installed or if the minimal/fake groups are not defined
 	make orm-install
