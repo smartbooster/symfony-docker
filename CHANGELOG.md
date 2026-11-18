@@ -1,5 +1,15 @@
 CHANGELOG for 1.x
 ===================
+## v1.4.6 - (2026-11-18)
+### Changed
+- `.env.skeleton` bump `NODE_VERSION` from 24 to 26 (26.11.1) and add the `libatomic` package in the `Dockerfile` required by Node 26.
+- Replace yarn by npm as the node package manager:
+  - `Dockerfile` remove the global yarn installation.
+  - `install.mk`, `bundle.mk` and `clevercloud/post_build*.sh` scripts use `npm ci` instead of `yarn install`.
+  - `assets.mk` use `npm run` instead of `yarn run` for the `dev`, `watch` and `build` commands.
+  - `docker.mk` the `docker-post-fetch` command now restores `package-lock.json` instead of `yarn.lock`.
+  - Replace the `yarn.lock` by a `package-lock.json` and remove `yarn-error.log` from the `.gitignore`.
+
 ## v1.4.5 - (2026-10-29)
 ### Changed
 - `install.mk` add the `make orm-show-diff` on the `make update` command to detected extra sql query (unmapped table, ...) that can lead to a desynch `orm-status`  

@@ -182,7 +182,7 @@ If you change the version values post `make up` then stop everything with a `mak
 ### Fix the Node Error digital envelope routines::unsupported ERR_OSSL_EVP_UNSUPPORTED
 
 If you are compiling your asset with a recent Node version (17+) and still having an old webpack@^4 you could have the 
-following error when doing a `yarn run dev` or `yarn run build` :
+following error when doing a `npm run dev` or `npm run build` :
 
 ```bash
 node:internal/crypto/hash:69

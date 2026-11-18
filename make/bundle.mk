@@ -25,7 +25,7 @@ platform-core-bundle-install: ## Post platform-core-bundle require command to ru
 	composer config optimize-autoloader true
 	composer config prepend-autoloader false
 	composer dump-autoload
-	yarn install
+	npm ci
 	make assets-dev
 	make orm-install
 	printf "\t\$$(CONSOLE) cmd:smart-entity-schema-load --env=\$$(ENV)\n" >> make/install.mk

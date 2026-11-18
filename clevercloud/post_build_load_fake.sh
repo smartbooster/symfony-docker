@@ -8,5 +8,5 @@ make orm-load-minimal ENV=prod
 make orm-load-fake ENV=prod
 
 # Frontend build
-yarn install
+npm ci
 make assets-build

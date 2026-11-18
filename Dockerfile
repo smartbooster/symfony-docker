@@ -30,7 +30,7 @@ RUN apk upgrade --no-cache \
     apache2 apache2-proxy \
     bash git jq make openssh-client-default sudo unzip zip \
     icu-libs icu-data-full libzip libsodium freetype libjpeg-turbo libpng \
-    libstdc++ libx11 libxrender libxext fontconfig ttf-dejavu ttf-liberation
+    libstdc++ libatomic libx11 libxrender libxext fontconfig ttf-dejavu ttf-liberation
 
 # PHP Extensions (build deps in a virtual package removed once compiled)
 # $PHPIZE_DEPS must stay unquoted: it is a space separated package list
@@ -69,13 +69,10 @@ RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
 COPY --from=surnet/alpine-wkhtmltopdf@sha256:af769681859fc7305e7f98eaffc55d6b9f65e1eefa490ba15201b3f0039b4ecb /bin/wkhtmltopdf /bin/wkhtmltopdf
 RUN wkhtmltopdf -V
 
-# Install Node et Yarn
+# Install Node et npm
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
-RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && node -v
-# yarn 1.x is frozen upstream (classic line), pinning it is safe
-RUN npm install -g yarn@1.22.22 && yarn -v \
-    && npm cache clean --force && rm -rf /root/.npm
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && node -v && npm -v
 
 # Add dev user
 ARG DEV_UID=1000

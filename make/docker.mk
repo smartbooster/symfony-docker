@@ -33,8 +33,8 @@ docker-post-fetch: ## Post smartbooster/symfony-docker fetch process to clean un
 	git restore package.json
 	git restore --staged README.md
 	git restore README.md
-	git restore --staged yarn.lock
-	git restore yarn.lock
+	git restore --staged package-lock.json
+	git restore package-lock.json
 	git restore --staged .gitignore
 	git restore .gitignore
 	git restore --staged .gitlab-ci.yml

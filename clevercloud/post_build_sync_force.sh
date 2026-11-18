@@ -6,5 +6,5 @@ make deploy-revision
 make orm-sync-force ENV=prod
 
 # Frontend build
-yarn install
+npm ci
 make assets-build
