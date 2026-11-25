@@ -49,8 +49,7 @@ ENV PATH="${PATH}:/root/.composer/vendor/bin"
 COPY --from=composer_upstream --link /composer /usr/bin/composer
 
 # Symfony CLI: static Go binary via the official installer (the cloudsmith apt repo is Debian-only)
-RUN curl -sS https://get.symfony.com/cli/installer | bash \
-    && mv /root/.symfony5/bin/symfony /usr/local/bin/symfony \
+RUN curl -sS https://get.symfony.com/cli/installer | bash -s -- --install-dir=/usr/local/bin \
     && symfony version
 
 # https://docs.blackfire.io/php/integrations/php-docker (musl build)
