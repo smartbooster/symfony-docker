@@ -33,13 +33,17 @@ RUN apk upgrade --no-cache \
     libstdc++ libatomic libx11 libxrender libxext fontconfig ttf-dejavu ttf-liberation
 
 # PHP Extensions (build deps in a virtual package removed once compiled)
-# $PHPIZE_DEPS must stay unquoted: it is a space separated package list
+# $PHPIZE_DEPS and $exts must stay unquoted: they are space separated lists
+# opcache is built into PHP core since 8.5 (no separate module to install), still needed as an extension on 8.4
+# TODO: drop the PHP_VERSION_ID check below (and always skip opcache) once PHP 8.4 is no longer supported.
 # hadolint ignore=DL3018,SC2086
-RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS linux-headers \
+RUN exts="intl pdo_mysql zip sodium gd exif" \
+    && if php -r 'exit(PHP_VERSION_ID < 80500 ? 0 : 1);'; then exts="$exts opcache"; fi \
+    && apk add --no-cache --virtual .build-deps $PHPIZE_DEPS linux-headers \
     icu-dev libzip-dev libsodium-dev freetype-dev libjpeg-turbo-dev libpng-dev zlib-dev \
     && docker-php-ext-configure zip \
     && docker-php-ext-configure gd --with-jpeg \
-    && docker-php-ext-install -j"$(nproc)" intl opcache pdo_mysql zip sodium gd exif \
+    && docker-php-ext-install -j"$(nproc)" $exts \
     && pecl install xdebug \
     && apk del .build-deps
 
@@ -49,8 +53,7 @@ ENV PATH="${PATH}:/root/.composer/vendor/bin"
 COPY --from=composer_upstream --link /composer /usr/bin/composer
 
 # Symfony CLI: static Go binary via the official installer (the cloudsmith apt repo is Debian-only)
-RUN curl -sS https://get.symfony.com/cli/installer | bash \
-    && mv /root/.symfony5/bin/symfony /usr/local/bin/symfony \
+RUN curl -sS https://get.symfony.com/cli/installer | bash -s -- --install-dir=/usr/local/bin \
     && symfony version
 
 # https://docs.blackfire.io/php/integrations/php-docker (musl build)
