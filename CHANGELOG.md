@@ -1,6 +1,9 @@
 CHANGELOG for 1.x
 ===================
 ## v1.4.7 - (2026-11-25)
+### Changed
+- `Dockerfile` make the image compatible with PHP 8.5: opcache is built into PHP core since 8.5, so `opcache` is now only installed as an extension on PHP 8.4 (`PHP_VERSION_ID < 80500`).
+
 ### Fixed
 - `Dockerfile` the Symfony CLI installer changed its default install directory, so the binary is no longer found in `/root/.symfony5/bin`. Use the installer `--install-dir=/usr/local/bin` option instead of moving the binary, as it is more robust.
 
